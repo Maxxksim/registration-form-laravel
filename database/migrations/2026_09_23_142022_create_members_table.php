@@ -19,6 +19,10 @@ return new class extends Migration {
             $table->string('country', 100);
             $table->string('phone', 20);
             $table->string('email')->unique();
+            $table->string('company')->nullable();
+            $table->string('position')->nullable();
+            $table->string('about_me', 500)->nullable();
+            $table->string('path_to_photo')->nullable();
             $table->timestamps();
         });
     }
