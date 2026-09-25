@@ -24,7 +24,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Pages
+    | pages
     |--------------------------------------------------------------------------
     |
     | These options configure how Inertia discovers page components on the

@@ -14,7 +14,7 @@
         <title>Registration Form</title>
     </x-inertia::head>
 </head>
-<body class="font-sans antialiased">
+<body class="bg-blue-200">
 <x-inertia::app/>
 <script src="{{ mix('js/app.js') }}" defer></script>
 </body>

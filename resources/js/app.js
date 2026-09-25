@@ -3,7 +3,7 @@ import {createInertiaApp} from '@inertiajs/vue3'
 
 createInertiaApp({
     resolve: name => {
-        const pages = require.context('./Pages', true, /\.vue$/)
+        const pages = require.context('./pages', true, /\.vue$/)
         const page = pages(`./${name}.vue`)
         return page.default;
     },
