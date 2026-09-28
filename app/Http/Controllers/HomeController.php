@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use Inertia\Inertia;
@@ -11,6 +13,7 @@ class HomeController extends Controller
     public function index(): Response
     {
         $countries = Countries::getNames('en');
+
         return Inertia::render('Home', [
             'countries' => $countries,
         ]);
