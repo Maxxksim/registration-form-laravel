@@ -13,6 +13,7 @@
     <x-inertia::head>
         <title>Registration Form</title>
     </x-inertia::head>
+    <title>Registration form</title>
 </head>
 <body class="bg-blue-200">
 <x-inertia::app/>
