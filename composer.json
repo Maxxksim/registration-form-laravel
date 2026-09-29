@@ -12,6 +12,7 @@
         "php": "^8.5",
         "ext-pdo": "*",
         "inertiajs/inertia-laravel": "^3.0",
+        "intervention/image": "*",
         "laravel/framework": "^13.17",
         "laravel/tinker": "^3.0",
         "laravel/wayfinder": "^0.1.14",
