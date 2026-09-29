@@ -5,11 +5,11 @@ declare(strict_types=1);
 namespace App\Http\Controllers;
 
 use App\Http\Requests\MemberStepOneRequest;
+use App\Http\Requests\MemberStepTwoRequest;
 use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\Intl\Countries;
@@ -39,11 +39,44 @@ class StepController extends Controller
         ]);
     }
 
+    public function getStepTwo(): Response
+    {
+        return Inertia::render('StepTwo', []);
+    }
+
+    public function getStepThanks(): Response
+    {
+        return Inertia::render('StepThanks', [
+            'countMembers' => Member::count(),
+            'sharingData' => [
+                'text' => config('sharing.text'),
+                'url' => config('sharing.url'),
+            ],
+        ]);
+    }
+
     public function stepOne(MemberStepOneRequest $memberStepOneRequest): RedirectResponse
     {
-        Member::create($memberStepOneRequest->validated());
-        session(['currentStep' => 'two']);
+        $member = Member::updateOrCreate(['email' => $memberStepOneRequest->validated()['email']], $memberStepOneRequest->validated());
+        $memberStepOneRequest->session()->put(['currentStep' => 'two', 'memberData' => $member->toArray()]);
 
         return redirect('/register/steps/two');
+    }
+
+    public function stepTwo(MemberStepTwoRequest $memberStepTwoRequest): RedirectResponse
+    {
+        $pathToPhoto = null;
+        if ($memberStepTwoRequest->hasFile('photo')) {
+            $pathToPhoto = $memberStepTwoRequest->image('photo')->toWebp()->store('photos', 'public');
+        }
+
+        Member::where('id', $memberStepTwoRequest->session()->get('memberData')['id'])->update(array_merge(
+            $memberStepTwoRequest->safe()->except('photo'),
+            ['path_to_photo' => $pathToPhoto]
+        ));
+
+        $memberStepTwoRequest->session()->put(['currentStep' => 'thanks']);
+
+        return redirect('/register/steps/thanks');
     }
 }

@@ -1,0 +1,47 @@
+<script setup>
+
+import {computed} from "vue";
+
+const props = defineProps({
+    sharingData: Object,
+    countMembers: String
+});
+
+const sharingTwitterUrl = computed(() =>
+    `https://x.com/intent/tweet?text=${encodeURIComponent(props.sharingData.text)}&url=${encodeURIComponent(props.sharingData.url)}`
+);
+
+const sharingFacebookUrl = computed(() =>
+    `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(props.sharingData.url)}`
+);
+
+console.log(sharingTwitterUrl);
+
+</script>
+
+<template>
+
+    <div class="mx-auto w-full m-30 p-30 text-center">
+        <h1 class="text-2xl font-bold mb-6 ">
+            Thanks
+        </h1>
+
+        <div class="mx-auto grid w-full max-w-xs grid-cols-2 gap-3 text-sm">
+            <a href="/members" class="text-blue-700 hover:underline" id="countMembers">All
+                members ({{ countMembers }})
+            </a>
+            <a href="/" id="startOver" class="text-gray-700 hover:underline">Start
+                over</a>
+
+
+            <a :href="sharingFacebookUrl" rel="noopener noreferrer"
+               class="border rounded-md w-full p-3" target="_blank" type="button">Share to Facebook</a>
+
+
+            <a :href="sharingTwitterUrl" rel="noopener noreferrer"
+               class="border rounded-md w-full p-3" target="_blank" type="button">Share to Twitter</a>
+        </div>
+    </div>
+
+</template>
+

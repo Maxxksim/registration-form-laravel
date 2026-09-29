@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Validation\Rule;
 
 class MemberStepOneRequest extends FormRequest
 {
@@ -16,9 +17,9 @@ class MemberStepOneRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:100'],
             'birthdate' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:today'],
             'report_subject' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'phone:AUTO'],
+            'phone' => ['required', 'string', 'phone:AUTO'],
             'country' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'unique:members', 'max:255'],
+            'email' => ['required', 'string', 'email', Rule::unique('members')->ignore($this->session()->get('memberData')['email'], 'email'), 'max:255'],
         ];
     }
 }
