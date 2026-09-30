@@ -10,6 +10,7 @@ use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\Intl\Countries;
@@ -35,7 +36,7 @@ class StepController extends Controller
         return Inertia::render('StepOne', [
             'countries' => $countries,
             'initialCountry' => $initialCountry ?? 'US',
-            'currentStep' => 'one',
+            'memberData' => $request->session()->get('memberData'),
         ]);
     }
 
@@ -58,7 +59,7 @@ class StepController extends Controller
     public function stepOne(MemberStepOneRequest $memberStepOneRequest): RedirectResponse
     {
         $member = Member::updateOrCreate(['email' => $memberStepOneRequest->validated()['email']], $memberStepOneRequest->validated());
-        $memberStepOneRequest->session()->put(['currentStep' => 'two', 'memberData' => $member->toArray()]);
+        $memberStepOneRequest->session()->put(['currentStep' => 'two', 'memberData' => $member->only('first_name', 'last_name', 'birthdate', 'report_subject', 'country', 'phone', 'email', 'id')]);
 
         return redirect('/register/steps/two');
     }
