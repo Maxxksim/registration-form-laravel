@@ -45,8 +45,11 @@ class StepController extends Controller
         return Inertia::render('StepTwo', []);
     }
 
-    public function getStepThanks(): Response
+    public function getStepThanks(Request $request): Response
     {
+        Inertia::clearHistory();
+        $request->session()->forget('memberData');
+
         return Inertia::render('StepThanks', [
             'countMembers' => Member::count(),
             'sharingData' => [

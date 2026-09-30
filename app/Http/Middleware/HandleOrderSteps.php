@@ -25,6 +25,10 @@ class HandleOrderSteps
                 ->withErrors(['error' => "You must pass step $current at first."]);
         }
 
+        if ($current === 'thanks' && $step !== 'thanks') {
+            return redirect('/register/steps/thanks');
+        }
+
         return $next($request);
     }
 }
