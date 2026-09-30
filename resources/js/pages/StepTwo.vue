@@ -2,7 +2,7 @@
 import {useForm, Link, usePage} from "@inertiajs/vue3";
 import {data} from "autoprefixer";
 import Map from "@/components/Map.vue";
-import OrderStepError from "@/components/OrderStepError.vue";
+import Error from "@/components/Error.vue";
 
 const page = usePage();
 
@@ -17,7 +17,7 @@ const form = useForm({
 </script>
 
 <template>
-    <OrderStepError/>
+    <Error/>
     <Map></Map>
     <form @submit.prevent="form.post('/register/steps/two')" enctype="multipart/form-data"
           class="max-w-md mx-auto flex flex-col gap-4 p-4">

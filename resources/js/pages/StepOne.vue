@@ -5,7 +5,7 @@ import 'flatpickr/dist/flatpickr.css';
 import IntlTelInput from "@intl-tel-input/vue/with-utils";
 import "intl-tel-input/styles";
 import Map from "@/components/Map.vue";
-import OrderStepError from "@/components/OrderStepError.vue";
+import Error from "@/components/Error.vue";
 
 const page = usePage();
 
@@ -36,7 +36,7 @@ const form = useForm({
 </script>
 
 <template>
-    <OrderStepError/>
+    <Error/>
     <Map></Map>
     <div class="flex flex-col  m-3">
         <h1 class="text-lg">To participate in the conference, please fill out the form:</h1>

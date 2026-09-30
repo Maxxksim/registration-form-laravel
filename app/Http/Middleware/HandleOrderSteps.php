@@ -22,7 +22,7 @@ class HandleOrderSteps
 
         if (self::STEPS_ORDER[$step] > self::STEPS_ORDER[$current]) {
             return redirect("/register/steps/{$current}")
-                ->withErrors(['order_step' => "You must pass step $current at first."]);
+                ->withErrors(['error' => "You must pass step $current at first."]);
         }
 
         return $next($request);

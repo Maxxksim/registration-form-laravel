@@ -3,7 +3,7 @@
 import {computed} from "vue";
 import {Link} from "@inertiajs/vue3"
 import Map from "@/components/Map.vue";
-import OrderStepError from "@/components/OrderStepError.vue";
+import Error from "@/components/Error.vue";
 
 const props = defineProps({
     sharingData: Object,
@@ -23,7 +23,7 @@ console.log(sharingTwitterUrl);
 </script>
 
 <template>
-    <OrderStepError/>
+    <Error/>
     <Map></Map>
     <div class="mx-auto w-full m-30 p-30 text-center">
         <h1 class="text-2xl font-bold mb-6 ">
