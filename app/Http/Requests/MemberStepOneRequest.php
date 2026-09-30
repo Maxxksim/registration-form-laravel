@@ -19,7 +19,7 @@ class MemberStepOneRequest extends FormRequest
             'report_subject' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'phone:AUTO'],
             'country' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'string', 'email', Rule::unique('members')->ignore($this->session()->get('memberData')['email'], 'email'), 'max:255'],
+            'email' => ['required', 'string', 'email', Rule::unique('members')->ignore($this->session()->get('memberData.email'), 'email'), 'max:255'],
         ];
     }
 }
