@@ -2,8 +2,10 @@
 import {useForm} from "@inertiajs/vue3";
 import FlatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
-import IntlTelInput from "@intl-tel-input/vue";
+import IntlTelInput from "@intl-tel-input/vue/with-utils";
 import "intl-tel-input/styles";
+import Map from "@/components/Map.vue";
+import OrderStepError from "@/components/OrderStepError.vue";
 
 const flatPickerConfig = {
     maxDate: 'today',
@@ -11,25 +13,35 @@ const flatPickerConfig = {
 }
 
 const props = defineProps({
-    countries: Array,
-    initialCountry: String
+    countries: Object,
+    initialCountry: String,
+    memberData: Object
 });
 
+const member = props.memberData ?? {};
+
 const form = useForm({
-    first_name: null,
-    last_name: null,
-    birthdate: null,
-    report_subject: null,
-    country: null,
-    phone: null,
-    email: null
+    first_name: member.first_name ?? null,
+    last_name: member.last_name ?? null,
+    birthdate: member.birthdate ?? null,
+    report_subject: member.report_subject ?? null,
+    country: member.country ?? null,
+    phone: member.phone ?? null,
+    email: member.email ?? null
 });
 
 </script>
 
 <template>
-    <form @submit.prevent="form.post('/register/steps/one')" method="post" class="max-w-md mx-auto flex flex-col gap-4 p-4">
+    <OrderStepError/>
+    <Map></Map>
+    <div class="flex flex-col  m-3">
+        <h1 class="text-lg">To participate in the conference, please fill out the form:</h1>
+    </div>
 
+    <form @submit.prevent="form.post('/register/steps/one')" class="max-w-md mx-auto flex flex-col gap-4 p-4">
+        <div class="relative z-0 w-full group"><p>Fields marked with <span class="text-red-500">*</span> are required.
+        </p></div>
         <label class="after:ml-1 after:text-red-500 after:content-['*']">First Name</label>
         <input type="text" maxlength="100" v-model="form.first_name" required
                class="border rounded-md w-full px-3 py-2">
@@ -58,10 +70,10 @@ const form = useForm({
         <div v-if="form.errors.country" class="text-red-500">{{ form.errors.country }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Phone</label>
-        <IntlTelInput v-model="form.phone" :hidden-inputs="() => ({ phone: 'phone' })"
+        <IntlTelInput v-model="form.phone"
                       :input-props="{ placeholder: 'Enter your number', class: 'border rounded-md w-full px-3 py-2' }"
                       :initial-country="initialCountry"
-                      :load-utils="() => import('intl-tel-input/utils')"/>
+        />
         <div v-if="form.errors.phone" class="text-red-500">{{ form.errors.phone }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Email</label>

@@ -1,5 +1,8 @@
 <script setup>
-import {useForm} from "@inertiajs/vue3";
+import {useForm, Link} from "@inertiajs/vue3";
+import {data} from "autoprefixer";
+import Map from "@/components/Map.vue";
+import OrderStepError from "@/components/OrderStepError.vue";
 
 
 const form = useForm({
@@ -7,13 +10,14 @@ const form = useForm({
     position: null,
     about_me: null,
     photo: null
-});
+}, data);
 
 </script>
 
 <template>
-
-    <form @submit.prevent="form.post('/register/steps/two')" method="post" enctype="multipart/form-data"
+    <OrderStepError/>
+    <Map></Map>
+    <form @submit.prevent="form.post('/register/steps/two')" enctype="multipart/form-data"
           class="max-w-md mx-auto flex flex-col gap-4 p-4">
         <div class="flex flex-col gap-1">
             <label for="company" class="text-sm font-medium">Company</label>
@@ -38,7 +42,8 @@ const form = useForm({
         <label for="photo" class="text-sm font-medium">Photo</label>
         <div class="flex  flex-col gap-1">
             <div class="relative">
-                <input type="file" @input="form.photo = $event.target.files[0]" autocomplete="off" accept="image/png, image/jpeg, image/webp"
+                <input type="file" @input="form.photo = $event.target.files[0]" autocomplete="off"
+                       accept="image/png, image/jpeg, image/webp"
                        class="border rounded-md w-full px-3 py-2  pr-12 hover:file:bg-gray-300">
                 <button type="button"
                         class="hidden absolute right-0.5 rounded  px-3 py-2 hover:bg">✕
@@ -48,9 +53,7 @@ const form = useForm({
         </div>
 
         <div class="flex gap-3">
-            <button type="button"
-                    class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Back
-            </button>
+            <Link href="/register/steps/one" class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Back</Link>
             <button type="submit" :disabled="form.processing"
                     class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Finish
             </button>
