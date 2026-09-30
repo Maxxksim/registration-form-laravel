@@ -12,10 +12,10 @@ class MemberStepTwoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'company' => ['string', 'max:255'],
-            'position' => ['string', 'max:255'],
-            'about_me' => ['string', 'max:500'],
-            'photo' => ['file', 'image', 'mimes:png,jpeg,webp', 'max:3024'],
+            'company' => ['nullable', 'string', 'max:255'],
+            'position' => ['nullable', 'string', 'max:255'],
+            'about_me' => ['nullable', 'string', 'max:500'],
+            'photo' => ['nullable', 'file', 'image', 'mimes:png,jpeg,webp', 'max:3024'],
         ];
     }
 }
