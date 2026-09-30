@@ -20,7 +20,7 @@ class MemberResource extends JsonResource
             'email' => $this->email,
             'company' => $this->company,
             'about_me' => $this->about_me,
-            'photo_url' => asset(Storage::url($this->path_to_photo ?? 'photos/default.webp'))
+            'photo_url' => $this->path_to_photo ? asset(Storage::url($this->path_to_phot)) : asset('images/default/default-photo.webp')
         ];
     }
 }
