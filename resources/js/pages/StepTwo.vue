@@ -1,11 +1,13 @@
 <script setup>
-import {useForm, Link} from "@inertiajs/vue3";
+import {useForm, Link, usePage} from "@inertiajs/vue3";
 import {data} from "autoprefixer";
 import Map from "@/components/Map.vue";
 import OrderStepError from "@/components/OrderStepError.vue";
 
+const page = usePage();
 
 const form = useForm({
+    _token: page.props.csrf_token,
     company: null,
     position: null,
     about_me: null,

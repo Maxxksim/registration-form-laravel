@@ -1,11 +1,13 @@
 <script setup>
-import {useForm} from "@inertiajs/vue3";
+import {useForm, usePage} from "@inertiajs/vue3";
 import FlatPickr from 'vue-flatpickr-component';
 import 'flatpickr/dist/flatpickr.css';
 import IntlTelInput from "@intl-tel-input/vue/with-utils";
 import "intl-tel-input/styles";
 import Map from "@/components/Map.vue";
 import OrderStepError from "@/components/OrderStepError.vue";
+
+const page = usePage();
 
 const flatPickerConfig = {
     maxDate: 'today',
@@ -21,6 +23,7 @@ const props = defineProps({
 const member = props.memberData ?? {};
 
 const form = useForm({
+    _token: page.props.csrf_token,
     first_name: member.first_name ?? null,
     last_name: member.last_name ?? null,
     birthdate: member.birthdate ?? null,
