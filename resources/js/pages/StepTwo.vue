@@ -1,10 +1,12 @@
 <script setup>
 import {useForm, Link, usePage} from "@inertiajs/vue3";
-import {data} from "autoprefixer";
 import Map from "@/components/Map.vue";
 import Error from "@/components/Error.vue";
+import {computed, ref} from "vue";
 
 const page = usePage();
+
+const photoInput = ref(null)
 
 const form = useForm({
     _token: page.props.csrf_token,
@@ -12,7 +14,21 @@ const form = useForm({
     position: null,
     about_me: null,
     photo: null
-}, data);
+});
+
+const visibleBtn = computed(function () {
+    if (form.photo) {
+        return true;
+    }
+    return false;
+});
+
+function cancelPhoto() {
+    form.photo = null;
+    if (photoInput.value) {
+        photoInput.value.value = ''
+    }
+}
 
 </script>
 
@@ -44,11 +60,11 @@ const form = useForm({
         <label for="photo" class="text-sm font-medium">Photo</label>
         <div class="flex  flex-col gap-1">
             <div class="relative">
-                <input type="file" @input="form.photo = $event.target.files[0]" autocomplete="off"
+                <input type="file" ref="photoInput" @input="form.photo = $event.target.files[0]" autocomplete="off"
                        accept="image/png, image/jpeg, image/webp"
                        class="border rounded-md w-full px-3 py-2  pr-12 hover:file:bg-gray-300">
-                <button type="button"
-                        class="hidden absolute right-0.5 rounded  px-3 py-2 hover:bg">✕
+                <button v-if="visibleBtn" type="button" @click="cancelPhoto()"
+                        class="absolute right-0.5 rounded  px-3 py-2 hover:bg">✕
                 </button>
                 <div v-if="form.errors.photo" class="text-red-500">{{ form.errors.photo }}</div>
             </div>
