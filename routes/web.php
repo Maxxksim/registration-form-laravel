@@ -2,6 +2,8 @@
 
 declare(strict_types=1);
 
+use App\Http\Controllers\AdminAuthController;
+use App\Http\Controllers\AdminPanelController;
 use App\Http\Controllers\MemberController;
 use App\Http\Controllers\StepController;
 use App\Http\Middleware\HandleOrderSteps;
@@ -23,3 +25,6 @@ Route::controller(StepController::class)->group(function () {
 });
 
 Route::get('/members', [MemberController::class, 'index']);
+Route::get('/admin/panel', [AdminPanelController::class, 'index'])->name('admin.panel');
+Route::get('/admin/login', [AdminAuthController::class, 'index'])->name('admin.login.index');
+Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');

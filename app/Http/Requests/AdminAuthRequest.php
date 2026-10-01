@@ -6,13 +6,13 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AdminRequest extends FormRequest
+class AdminAuthRequest extends FormRequest
 {
     public function rules(): array
     {
         return [
-            'username' => ['required', 'unique:admins', 'string', 'max:255', 'min:5'],
-            'password' => ['required', 'string']
+            'username' => ['required', 'string', 'max:255'],
+            'password' => ['required', 'string'],
         ];
     }
 }
