@@ -45,11 +45,8 @@ class StepController extends Controller
         return Inertia::render('StepTwo', []);
     }
 
-    public function getStepThanks(Request $request): Response
+    public function getStepThanks(): Response
     {
-        Inertia::clearHistory();
-        $request->session()->forget('memberData');
-
         return Inertia::render('StepThanks', [
             'countMembers' => Member::count(),
             'sharingData' => [
@@ -82,5 +79,13 @@ class StepController extends Controller
         $memberStepTwoRequest->session()->put(['currentStep' => 'thanks']);
 
         return redirect('/register/steps/thanks');
+    }
+
+    public function startOver(Request $request): RedirectResponse
+    {
+        Inertia::clearHistory();
+        $request->session()->invalidate();
+
+        return redirect(route('index'));
     }
 }
