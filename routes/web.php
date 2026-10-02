@@ -29,3 +29,9 @@ Route::get('/members', [MemberController::class, 'index']);
 Route::get('/admin/panel', [AdminPanelController::class, 'index'])->name('admin.panel');
 Route::get('/admin/login', [AdminAuthController::class, 'index'])->name('admin.login.index');
 Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
+
+Route::middleware('auth')->group(function () {
+    Route::patch('/admin/members/{member}', [MemberController::class, 'update']);
+    Route::patch('/admin/members/{member}/visibility', [MemberController::class, 'switchVisibility']);
+    Route::delete('/admin/members/{member}', [MemberController::class, 'delete']);
+});

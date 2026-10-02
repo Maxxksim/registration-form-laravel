@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use Inertia\Response;
+use Symfony\Component\Intl\Countries;
 
 class AdminPanelController extends Controller
 {
@@ -19,6 +20,7 @@ class AdminPanelController extends Controller
 
         return Inertia::render('AdminPanel', [
             'members' => Member::paginate(5)->toResourceCollection(),
+            'countries' => Countries::getNames('en')
         ]);
     }
 }

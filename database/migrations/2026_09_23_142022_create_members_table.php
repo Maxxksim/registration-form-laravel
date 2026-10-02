@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('first_name', 100);
             $table->string('last_name', 100);
             $table->date('birthdate');
-            $table->string('report_subject', 500);
+            $table->string('report_subject');
             $table->string('country', 100);
             $table->string('phone', 20);
             $table->string('email')->unique();
@@ -26,6 +26,7 @@ return new class extends Migration
             $table->string('position')->nullable();
             $table->string('about_me', 500)->nullable();
             $table->string('path_to_photo')->nullable();
+            $table->boolean('is_visible')->default(true);
             $table->timestamps();
         });
     }

@@ -11,6 +11,7 @@ class MemberResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id' => $this->id,
             'first_name' => $this->first_name,
             'last_name' => $this->last_name,
             'birthdate' => $this->birthdate,
@@ -19,8 +20,10 @@ class MemberResource extends JsonResource
             'country' => $this->country,
             'email' => $this->email,
             'company' => $this->company,
+            'position' => $this->position,
             'about_me' => $this->about_me,
-            'photo_url' => $this->path_to_photo ? asset(Storage::url($this->path_to_phot)) : asset('images/default/default-photo.webp')
+            'photo_url' => $this->path_to_photo ? asset(Storage::url($this->path_to_photo)) : asset('images/default/default-photo.webp'),
+            'is_visible' => $this->is_visible
         ];
     }
 }

@@ -23,6 +23,7 @@ return Application::configure(basePath: dirname(__DIR__))
             AddLinkHeadersForPreloadedAssets::class,
             EncryptHistory::class,
         ]);
+        $middleware->redirectGuestsTo(fn() => route('admin.login.index'));
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(

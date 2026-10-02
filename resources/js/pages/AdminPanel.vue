@@ -1,95 +1,129 @@
 <script setup>
+import {router} from "@inertiajs/vue3";
+import AdminPanelEditMember from "@/pages/AdminPanelEditMember.vue";
+import {ref, watchEffect} from "vue";
 
 const props = defineProps({
-    members: Object
+    members: Object,
+    countries: Object
 });
+
+const options = {preserveScroll: true}
+
+const isEditing = ref(false);
+const editingMember = ref(null);
+
+function switchVisibility(member) {
+    router.patch(`/admin/members/${member.id}/visibility`, {
+        is_visible: !member.is_visible
+    }, options);
+}
+
+function deleteMember(member) {
+    router.delete(`/admin/members/${member.id}`, options);
+}
+
+function editMember(member) {
+    isEditing.value = true;
+    editingMember.value = member;
+
+}
+
+watchEffect(function () {
+    if(isEditing.value) {
+        document.body.classList.add('overflow-hidden')
+    } else {
+        document.body.classList.remove('overflow-hidden')
+    }
+})
 
 </script>
 
 <template>
-
     <div class="m-5"><h1 class="text-2xl font-bold mb-4 text-center">Admin panel</h1></div>
-    <div class="mx-5 md:mx-10 text-center rounded-md text-xs">
-        <div class="hidden md:grid grid-cols-4 rounded-md font-semibold mb-5">
-            <div class="border m-2 rounded-md bg-white"><h2>Photo</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>First name</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>Last name</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>Birthdate</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>Report subject</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>Country</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>Phone</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>Email</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>Company</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>Position</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2>About me</h2></div>
-            <div class="border m-2 rounded-md bg-white"><h2></h2></div>
-        </div>
-        <div class="flex flex-col gap-4 md:gap-0">
-            <div>
-                <div class="border rounded m-1 wrap-break-word">
-                    <div v-for="member in members.data"
-                         class="grid grid-cols-1 rounded-md gap-3 bg-white md:rounded-none md:grid-cols-4 md:items-center  md:border-t-0">
-                        <div class="flex items-center gap-3 p-5 md:justify-center">
-                            <span class="font-semibold md:hidden">Photo:</span>
-                            <img :src="`${member.photo_url}`"
-                                 alt="Photo"
-                                 class="w-20 h-20 rounded-md">
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">First name:</span>
-                            <span>{{ member.first_name }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">Last name:</span>
-                            <span>{{ member.last_name }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">Birthdate:</span>
-                            <span>{{ member.birthdate }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">Report subject:</span>
-                            <span>{{ member.report_subject }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">Country:</span>
-                            <span>{{ member.country }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">Phone:</span>
-                            <span>{{ member.phone }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">Email:</span>
-                            <span>{{ member.email }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">Company:</span>
-                            <span>{{ member.company }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">Position:</span>
-                            <span>{{ member.position }}</span>
-                        </div>
-
-                        <div>
-                            <span class="font-semibold md:hidden">About me:</span>
-                            <span>{{ member.about_me }}</span>
-                        </div>
+    <div class="max-w-7xl mx-auto p-4">
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            <div v-for="member in members.data" :key="member.id"
+                 class="flex flex-col bg-white border rounded-lg shadow-sm p-5 gap-3 wrap-break-word">
+                <div class="flex flex-col-2 gap-3 self-center">
+                    <div class="w-20 self-center">
+                        <img :src="`${member.photo_url}`"
+                             alt="Photo"
+                             class="w-20 h-20 rounded-md">
                     </div>
+
+                    <div :class="member.is_visible ? 'bg-green-300' : 'bg-red-300'"
+                         class="border rounded-md w-auto h-20 content-center text-center self-center p-5">
+                        <span class="font-bold">Visibility status: </span><br/>
+                        <span class="">{{ member.is_visible ? 'VISIBLE' : 'HIDDEN' }}</span>
+                    </div>
+                </div>
+
+                <div>
+                    <span class="font-bold">First name: </span>
+                    <span>{{ member.first_name }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">Last name: </span>
+                    <span>{{ member.last_name }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">Birthdate: </span>
+                    <span>{{ member.birthdate }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">Report subject: </span>
+                    <span>{{ member.report_subject }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">Country: </span>
+                    <span>{{ member.country }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">Phone: </span>
+                    <span>{{ member.phone }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">Email: </span>
+                    <span>{{ member.email }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">Company: </span>
+                    <span>{{ member.company || '—' }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">Position: </span>
+                    <span>{{ member.position || '—' }}</span>
+                </div>
+
+                <div>
+                    <span class="font-bold">About me: </span>
+                    <span>{{ member.about_me || '—' }}</span>
+                </div>
+
+                <div class="flex flex-col-3 gap-1">
+                    <button @click="switchVisibility(member)"
+                            class="border rounded-md w-80 px-3 py-2 bg-yellow-300 hover:bg-yellow-50">Switch visibility
+                    </button>
+                    <button @click="editMember(member)"
+                            class="border rounded-md w-80 px-3 py-2 bg-blue-300 hover:bg-blue-50">Edit
+                    </button>
+                    <button @click="deleteMember(member)"
+                            class="border rounded-md w-80 px-3 py-2 bg-red-300 hover:bg-red-50">Delete
+                    </button>
                 </div>
             </div>
         </div>
     </div>
+    <AdminPanelEditMember v-if="isEditing" :member="editingMember" :countries="countries" @cancel="isEditing=false"/>
 </template>
 
 
