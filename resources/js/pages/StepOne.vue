@@ -42,7 +42,8 @@ const form = useForm({
         <h1 class="text-lg">To participate in the conference, please fill out the form:</h1>
     </div>
 
-    <form @submit.prevent="form.post('/register/steps/one')" class="max-w-md mx-auto flex flex-col gap-4 p-4">
+    <form @submit.prevent="form.post('/register/steps/one', {preserveScroll: 'errors'})"
+          class="max-w-md mx-auto flex flex-col gap-4 p-4">
         <div class="relative z-0 w-full group"><p>Fields marked with <span class="text-red-500">*</span> are required.
         </p></div>
         <label class="after:ml-1 after:text-red-500 after:content-['*']">First Name</label>

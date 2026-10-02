@@ -35,7 +35,7 @@ function cancelPhoto() {
 <template>
     <Error/>
     <Map></Map>
-    <form @submit.prevent="form.post('/register/steps/two')" enctype="multipart/form-data"
+    <form @submit.prevent="form.post('/register/steps/two', {preserveScroll: 'errors'})" enctype="multipart/form-data"
           class="max-w-md mx-auto flex flex-col gap-4 p-4">
         <div class="flex flex-col gap-1">
             <label for="company" class="text-sm font-medium">Company</label>
