@@ -42,7 +42,7 @@ class StepController extends Controller
 
     public function getStepTwo(): Response
     {
-        return Inertia::render('StepTwo', []);
+        return Inertia::render('StepTwo');
     }
 
     public function getStepThanks(): Response
