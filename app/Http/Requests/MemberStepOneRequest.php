@@ -14,7 +14,7 @@ class MemberStepOneRequest extends FormRequest
         return [
             'first_name' => ['required', 'string', 'max:100'],
             'last_name' => ['required', 'string', 'max:100'],
-            'birthdate' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:today'],
+            'birthdate' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:tomorrow'],
             'report_subject' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'phone:AUTO'],
             'country' => ['required', 'string', 'max:255'],
