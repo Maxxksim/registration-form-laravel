@@ -21,4 +21,14 @@ class MemberStepOneRequest extends FormRequest
             'email' => ['required', 'string', 'email', Rule::unique('members')->ignore($this->session()->get('memberData.email'), 'email'), 'max:255'],
         ];
     }
+
+    public function messages(): array
+    {
+        return [
+            'phone.phone' => 'Please enter a valid phone number.',
+            'first_name.required' => 'The first name field is required.',
+            'last_name.required' => 'The last name field is required.',
+            'report_subject.required' => 'The report subject field is required.'
+        ];
+    }
 }
