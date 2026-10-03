@@ -78,7 +78,7 @@ function updateMember() {
                     <div>
                         <label for="birthdate">Birthdate</label>
                         <FlatPickr v-model="form.birthdate" required :config="flatPickerConfig"
-                                   class="border rounded-md w-100 px-3 py-2"/>
+                                   class="border rounded-md w-full px-3 py-2"/>
                         <div v-if="form.errors.birthdate" class="text-red-500">{{ form.errors.birthdate }}</div>
                     </div>
 
@@ -93,7 +93,7 @@ function updateMember() {
                     </div>
 
                     <div><label for="country">Country</label>
-                        <select v-model="form.country" required class="border rounded-md w-full pr-3 py-2">
+                        <select v-model="form.country" required class="border rounded-md w-full px-3 py-2">
                             <option v-for="country in countries" :value="country">
                                 {{ country }}
                             </option>
@@ -104,7 +104,7 @@ function updateMember() {
                     <div>
                         <label for="phone" class="block">Phone</label>
                         <IntlTelInput v-model="form.phone"
-                                      :input-props="{ class: 'border rounded-md !w-full !py-2 pr-3' }"/>
+                                      :input-props="{ class: 'border rounded-md w-full block px-3 py-2' }"/>
                         <div v-if="form.errors.phone" class="text-red-500">{{ form.errors.phone }}</div>
                     </div>
 
