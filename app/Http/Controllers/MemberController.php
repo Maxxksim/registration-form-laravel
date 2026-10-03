@@ -17,7 +17,7 @@ class MemberController extends Controller
     public function index(): Response
     {
         return Inertia::render('Members', [
-            'members' => Member::where('is_visible', true)->paginate(10)->toResourceCollection(),
+            'members' => Inertia::scroll(Member::where('is_visible', true)->paginate(12)->toResourceCollection()),
         ]);
     }
 

@@ -18,7 +18,7 @@ class AdminPanelController extends Controller
         }
 
         return Inertia::render('AdminPanel', [
-            'members' => Member::paginate(5)->toResourceCollection(),
+            'members' => Inertia::scroll(Member::paginate(12)->toResourceCollection()),
             'countries' => Countries::getNames('en')
         ]);
     }
