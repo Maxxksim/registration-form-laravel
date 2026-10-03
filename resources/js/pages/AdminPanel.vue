@@ -1,6 +1,6 @@
 <script setup>
 import {InfiniteScroll, router} from "@inertiajs/vue3";
-import AdminPanelEditMember from "@/pages/AdminPanelEditMember.vue";
+import AdminPanelEditMember from "@/components/AdminPanelEditMember.vue";
 import {ref, watchEffect} from "vue";
 
 const props = defineProps({
@@ -110,16 +110,16 @@ watchEffect(function () {
                         <span>{{ member.about_me || '—' }}</span>
                     </div>
 
-                    <div class="flex flex-col-3 gap-1 mt-auto">
+                    <div class="flex flex-col-3 gap-1 mt-auto text-xs">
                         <button @click="switchVisibility(member)"
-                                class="border rounded-md w-80 px-3 py-2 bg-yellow-300 hover:bg-yellow-50">Switch
+                                class="border rounded-md w-100 px-3 py-2 bg-yellow-300 hover:bg-yellow-50">Switch
                             visibility
                         </button>
                         <button @click="editMember(member)"
-                                class="border rounded-md w-80 px-3 py-2 bg-blue-300 hover:bg-blue-50">Edit
+                                class="border rounded-md w-100 px-3 py-2 bg-blue-300 hover:bg-blue-50">Edit
                         </button>
                         <button @click="deleteMember(member)"
-                                class="border rounded-md w-80 px-3 py-2 bg-red-300 hover:bg-red-50">Delete
+                                class="border rounded-md w-100 px-3 py-2 bg-red-300 hover:bg-red-50">Delete
                         </button>
                     </div>
                 </div>
