@@ -26,9 +26,6 @@ class MemberStepOneRequest extends FormRequest
     {
         return [
             'phone.phone' => 'Please enter a valid phone number.',
-            'first_name.required' => 'The first name field is required.',
-            'last_name.required' => 'The last name field is required.',
-            'report_subject.required' => 'The report subject field is required.'
         ];
     }
 }
