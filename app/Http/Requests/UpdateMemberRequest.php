@@ -13,7 +13,7 @@ class UpdateMemberRequest extends FormRequest
         return [
             'first_name' => ['sometimes', 'required', 'string', 'max:100'],
             'last_name' => ['sometimes', 'required', 'string', 'max:100'],
-            'birthdate' => ['sometimes', 'required', 'date', 'date_format:Y-m-d', 'before_or_equal:today'],
+            'birthdate' => ['sometimes', 'required', 'date', 'date_format:Y-m-d', 'before_or_equal:tomorrow'],
             'report_subject' => ['sometimes', 'required', 'string', 'max:255'],
             'phone' => ['sometimes', 'required', 'string', 'phone:AUTO'],
             'country' => ['sometimes', 'required', 'string', 'max:255'],
@@ -23,6 +23,13 @@ class UpdateMemberRequest extends FormRequest
             'about_me' => ['sometimes', 'nullable', 'string', 'max:500'],
             'photo' => ['sometimes', 'nullable', 'file', 'image', 'mimes:png,jpeg,webp', 'max:3024'],
             'is_visible' => ['sometimes', 'bool']
+        ];
+    }
+
+    public function messages(): array
+    {
+        return [
+            'phone.phone' => 'Please enter a valid phone number.'
         ];
     }
 }
