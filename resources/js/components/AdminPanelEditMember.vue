@@ -90,6 +90,7 @@ function updateMember() {
                     <div>
                         <label for="phone" class="block">Phone</label>
                         <IntlTelInput v-model="form.phone"
+                                      :class-names="{ container: 'w-full' }"
                                       :input-props="{ class: 'border rounded-md w-full block px-3 py-2' }"/>
                         <div v-if="form.errors.phone" class="text-red-500">{{ form.errors.phone }}</div>
                     </div>
