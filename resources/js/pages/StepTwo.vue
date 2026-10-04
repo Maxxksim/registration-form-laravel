@@ -3,10 +3,9 @@ import {useForm, Link, usePage} from "@inertiajs/vue3";
 import Map from "@/components/Map.vue";
 import Error from "@/components/Error.vue";
 import {computed, ref} from "vue";
+import UploadPhotoInput from "@/components/UploadPhotoInput.vue";
 
 const page = usePage();
-
-const photoInput = ref(null)
 
 const form = useForm({
     _token: page.props.csrf_token,
@@ -15,20 +14,6 @@ const form = useForm({
     about_me: null,
     photo: null
 });
-
-const visibleBtn = computed(function () {
-    if (form.photo) {
-        return true;
-    }
-    return false;
-});
-
-function cancelPhoto() {
-    form.photo = null;
-    if (photoInput.value) {
-        photoInput.value.value = ''
-    }
-}
 
 </script>
 
@@ -58,20 +43,9 @@ function cancelPhoto() {
             <div v-if="form.errors.about_me" class="text-red-500">{{ form.errors.about_me }}</div>
         </div>
         <label for="photo" class="text-sm font-medium">Photo</label>
-        <div class="flex  flex-col gap-1">
-            <div class="relative">
-                <input type="file" ref="photoInput" @input="form.photo = $event.target.files[0]" autocomplete="off"
-                       accept="image/png, image/jpeg, image/webp"
-                       class="border rounded-md w-full px-3 py-2  pr-12 hover:file:bg-gray-300">
-                <button v-if="visibleBtn" type="button" @click="cancelPhoto()"
-                        class="absolute right-0.5 rounded  px-3 py-2 hover:bg">✕
-                </button>
-                <div v-if="form.errors.photo" class="text-red-500">{{ form.errors.photo }}</div>
-            </div>
-        </div>
-
+        <UploadPhotoInput :form="form" />
         <div class="flex gap-3">
-            <Link href="/register/steps/one" class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Back</Link>
+            <Link href="/register/steps/one" class="border rounded-md w-full px-3 py-2 text-center hover:bg-gray-300">Back</Link>
             <button type="submit" :disabled="form.processing"
                     class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Finish
             </button>

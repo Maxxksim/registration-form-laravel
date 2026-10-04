@@ -4,7 +4,7 @@ import 'flatpickr/dist/flatpickr.css';
 import IntlTelInput from "@intl-tel-input/vue/with-utils";
 import "intl-tel-input/styles";
 import {useForm} from "@inertiajs/vue3";
-import {computed, ref} from "vue";
+import UploadPhotoInput from "@/components/UploadPhotoInput.vue";
 
 const flatPickerConfig = {
     maxDate: 'today',
@@ -16,7 +16,7 @@ const props = defineProps({
     countries: Object
 });
 
-const photoInput = ref(null)
+
 const emit = defineEmits(['cancel']);
 
 const form = useForm({
@@ -32,20 +32,6 @@ const form = useForm({
     about_me: props.member.about_me ?? null,
     photo: null
 });
-
-const visibleBtn = computed(function () {
-    if (form.photo) {
-        return true;
-    }
-    return false;
-});
-
-function cancelPhoto() {
-    form.photo = null;
-    if (photoInput.value) {
-        photoInput.value.value = ''
-    }
-}
 
 function updateMember() {
     form.patch(`/admin/members/${props.member.id}`, {
@@ -118,13 +104,13 @@ function updateMember() {
                 <div class="flex-1 min-w-0">
                     <div>
                         <label for="company">Company</label>
-                        <input type="text" v-model="form.company" required class="border rounded-md w-full px-3 py-2">
+                        <input type="text" v-model="form.company" class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.company" class="text-red-500">{{ form.errors.company }}</div>
                     </div>
 
                     <div>
                         <label for="position">Position</label>
-                        <input type="text" v-model="form.position"  class="border rounded-md w-full px-3 py-2">
+                        <input type="text" v-model="form.position" class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.position" class="text-red-500">{{ form.errors.position }}</div>
                     </div>
 
@@ -143,19 +129,8 @@ function updateMember() {
                                  alt="Photo"
                                  class="w-20 h-20 rounded-md">
                         </div>
-                        <div class="flex flex-col">
-                            <label for="upload new photo">To upload new photo:</label>
-                            <div class="relative">
-
-                                <input type="file" ref="photoInput" @input="form.photo = $event.target.files[0]"
-                                       accept="image/png, image/jpeg, image/webp"
-                                       class="border rounded-md w-full px-3 py-2 pr-12 hover:file:bg-gray-300">
-                                <button v-if="visibleBtn" type="button" @click="cancelPhoto()"
-                                        class="absolute right-0.5 rounded  px-3 py-2 hover:bg-gray-300">✕
-                                </button>
-                            </div>
-                            <div v-if="form.errors.photo" class="text-red-500">{{ form.errors.photo }}</div>
-                        </div>
+                        <label for="upload new photo">To upload new photo:</label>
+                        <UploadPhotoInput :form="form"/>
                     </div>
                 </div>
             </div>
@@ -163,7 +138,8 @@ function updateMember() {
                 <button @click="emit('cancel')" class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">
                     Cancel
                 </button>
-                <button type="submit" :disabled="form.processing" class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Update
+                <button type="submit" :disabled="form.processing"
+                        class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Update
                 </button>
             </div>
         </form>
