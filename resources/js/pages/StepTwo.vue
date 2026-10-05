@@ -2,7 +2,6 @@
 import {useForm, Link, usePage} from "@inertiajs/vue3";
 import Map from "@/components/Map.vue";
 import Error from "@/components/Error.vue";
-import {computed, ref} from "vue";
 import UploadPhotoInput from "@/components/UploadPhotoInput.vue";
 
 
