@@ -7,7 +7,6 @@ namespace App\Http\Controllers;
 use App\Http\Requests\AdminAuthRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 
@@ -22,7 +21,7 @@ class AdminAuthController extends Controller
         }
 
         return back()->withErrors([
-            'credentials' => 'The provided credentials do not match our records.'
+            'credentials' => 'The provided credentials do not match our records.',
         ]);
     }
 

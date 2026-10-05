@@ -21,7 +21,7 @@ class StepController extends Controller
 
     public function index(Request $request): RedirectResponse
     {
-        if (!$request->session()->has('currentStep')) {
+        if (! $request->session()->has('currentStep')) {
             $request->session()->put('currentStep', 'one');
 
             return redirect(route('steps.one.show'));

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Database\Factories;
 
 use App\Models\Admin;
@@ -11,12 +13,11 @@ use Illuminate\Support\Facades\Hash;
  */
 class AdminFactory extends Factory
 {
-
     public function definition(): array
     {
         return [
             'username' => 'admin',
-            'password' => Hash::make('admin')
+            'password' => Hash::make('admin'),
         ];
     }
 }

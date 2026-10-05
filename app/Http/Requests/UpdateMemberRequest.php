@@ -1,8 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Requests;
 
-use Illuminate\Contracts\Validation\ValidationRule;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
 
@@ -22,14 +23,14 @@ class UpdateMemberRequest extends FormRequest
             'position' => ['sometimes', 'nullable', 'string', 'max:255'],
             'about_me' => ['sometimes', 'nullable', 'string', 'max:500'],
             'photo' => ['sometimes', 'nullable', 'file', 'image', 'mimes:png,jpeg,webp', 'max:3024'],
-            'is_visible' => ['sometimes', 'bool']
+            'is_visible' => ['sometimes', 'bool'],
         ];
     }
 
     public function messages(): array
     {
         return [
-            'phone.phone' => 'Please enter a valid phone number.'
+            'phone.phone' => 'Please enter a valid phone number.',
         ];
     }
 }
