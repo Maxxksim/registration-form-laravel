@@ -14,7 +14,7 @@ class MemberStepTwoRequest extends FormRequest
             'company' => ['nullable', 'string', 'max:255'],
             'position' => ['nullable', 'string', 'max:255'],
             'about_me' => ['nullable', 'string', 'max:500'],
-            'photo' => ['nullable', 'file', 'image', 'mimes:png,jpeg,webp', 'max:3024'],
+            'photo' => ['nullable', 'file', 'image', 'mimes:png,jpeg,webp', 'max:3072'],
         ];
     }
 }

@@ -24,13 +24,27 @@ function cancelPhoto() {
     }
 }
 
+const choosePhoto = (event) => {
+    const file = event.target.files[0] ?? null
+
+    if (file && file.size > 3072  * 1024) {
+        props.form.setError('photo', 'The photo field must not be greater than 3024 kilobytes.')
+        event.target.value = ''
+        props.form.photo = null
+
+        return
+    }
+
+    props.form.photo = file;
+}
+
 </script>
 
 <template>
     <div class="flex flex-col">
         <div class="relative">
 
-            <input type="file" ref="photoInput" @input="form.photo = $event.target.files[0]; form.clearErrors('photo')"
+            <input type="file" ref="photoInput" @change="choosePhoto" @input="form.photo = $event.target.files[0]; form.clearErrors('photo')"
                    accept="image/png, image/jpeg, image/webp"
                    class="border rounded-md w-full px-3 py-2 pr-12 hover:file:bg-gray-300">
             <button v-if="visibleCancelPhotoBtn" type="button" @click="cancelPhoto()"
