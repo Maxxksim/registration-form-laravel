@@ -18,8 +18,6 @@ const sharingFacebookUrl = computed(() =>
     `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(props.sharingData.url)}`
 );
 
-console.log(sharingTwitterUrl);
-
 </script>
 
 <template>
