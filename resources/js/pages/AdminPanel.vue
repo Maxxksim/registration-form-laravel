@@ -41,6 +41,7 @@ watchEffect(function () {
 
 <template>
     <div class="m-5"><h1 class="text-2xl font-bold mb-4 text-center">Admin panel</h1></div>
+    <div v-if="members.data.length === 0" class="m-5"><h2 class="mb-4 text-center">No members have registered yet.</h2></div>
     <InfiniteScroll data="members">
         <div class="max-w-7xl mx-auto p-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
