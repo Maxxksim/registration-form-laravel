@@ -47,26 +47,30 @@ const form = useForm({
         <div class="relative z-0 w-full group"><p>Fields marked with <span class="text-red-500">*</span> are required.
         </p></div>
         <label class="after:ml-1 after:text-red-500 after:content-['*']">First Name</label>
-        <input type="text" maxlength="100" v-model="form.first_name" required
+        <input type="text" maxlength="100" v-model="form.first_name" @input="form.clearErrors('first_name')"
+               autocomplete="off" required
                class="border rounded-md w-full px-3 py-2">
         <div v-if="form.errors.first_name" class="text-red-500">{{ form.errors.first_name }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Last Name</label>
-        <input type="text" v-model="form.last_name" maxlength="100" required class="border rounded-md w-full px-3 py-2">
+        <input type="text" v-model="form.last_name" maxlength="100" @input="form.clearErrors('last_name')"
+               autocomplete="off" required class="border rounded-md w-full px-3 py-2">
         <div v-if="form.errors.last_name" class="text-red-500">{{ form.errors.last_name }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Birthdate</label>
-        <FlatPickr v-model="form.birthdate" required :config="flatPickerConfig"
+        <FlatPickr v-model="form.birthdate" @input="form.clearErrors('birthdate')" autocomplete="off" required
+                   :config="flatPickerConfig"
                    class="border rounded-md w-full px-3 py-2"/>
         <div v-if="form.errors.birthdate" class="text-red-500">{{ form.errors.birthdate }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Report subject</label>
-        <input type="text" v-model="form.report_subject" maxlength="255" required
+        <input type="text" v-model="form.report_subject" maxlength="255" @input="form.clearErrors('report_subject')"
+               autocomplete="off" required
                class="border rounded-md w-full px-3 py-2">
         <div v-if="form.errors.report_subject" class="text-red-500">{{ form.errors.report_subject }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Country</label>
-        <select required v-model="form.country" class="border rounded-md w-full px-3 py-2">
+        <select required v-model="form.country" autocomplete="off" class="border rounded-md w-full px-3 py-2">
             <option v-for="country in countries" :value="country">
                 {{ country }}
             </option>
@@ -74,14 +78,17 @@ const form = useForm({
         <div v-if="form.errors.country" class="text-red-500">{{ form.errors.country }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Phone</label>
-        <IntlTelInput v-model="form.phone"
-                      :input-props="{ placeholder: 'Enter your number', class: 'border rounded-md w-full px-3 py-2' }"
-                      :initial-country="initialCountry"
+        <IntlTelInput v-model="form.phone" @input="form.clearErrors('phone')" autocomplete="off" required :input-props="{
+         required: true,
+         autocomplete: 'off',
+         placeholder: 'Enter your number',
+         class: 'border rounded-md w-full px-3 py-2' }" :initial-country="initialCountry"
         />
         <div v-if="form.errors.phone" class="text-red-500">{{ form.errors.phone }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Email</label>
-        <input type="email" v-model="form.email" maxlength="255" required class="border rounded-md w-full px-3 py-2">
+        <input type="email" v-model="form.email" maxlength="255" @input="form.clearErrors('email')" autocomplete="off"
+               required class="border rounded-md w-full px-3 py-2">
         <div v-if="form.errors.email" class="text-red-500">{{ form.errors.email }}</div>
 
         <button type="submit" :disabled="form.processing" id="stepOneBtn"

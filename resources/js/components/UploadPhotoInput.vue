@@ -19,6 +19,9 @@ function cancelPhoto() {
     if (photoInput.value) {
         photoInput.value.value = ''
     }
+    if (props.form.errors.photo) {
+        props.form.clearErrors('photo');
+    }
 }
 
 </script>
@@ -27,7 +30,7 @@ function cancelPhoto() {
     <div class="flex flex-col">
         <div class="relative">
 
-            <input type="file" ref="photoInput" @input="form.photo = $event.target.files[0]"
+            <input type="file" ref="photoInput" @input="form.photo = $event.target.files[0]; form.clearErrors('photo')"
                    accept="image/png, image/jpeg, image/webp"
                    class="border rounded-md w-full px-3 py-2 pr-12 hover:file:bg-gray-300">
             <button v-if="visibleCancelPhotoBtn" type="button" @click="cancelPhoto()"
