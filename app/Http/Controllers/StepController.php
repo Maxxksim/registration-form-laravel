@@ -11,7 +11,6 @@ use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Log;
 use Inertia\Inertia;
 use Inertia\Response;
 use Symfony\Component\Intl\Countries;
@@ -25,10 +24,10 @@ class StepController extends Controller
         if (!$request->session()->has('currentStep')) {
             $request->session()->put('currentStep', 'one');
 
-            return redirect('/register/steps/one');
+            return redirect(route('steps.one.show'));
         }
 
-        return redirect('/register/steps/' . $request->session()->get('currentStep'));
+        return redirect(route("steps.{$request->session()->get('currentStep')}.show"));
     }
 
     public function getStepOne(Request $request): Response
@@ -62,10 +61,9 @@ class StepController extends Controller
     public function stepOne(MemberStepOneRequest $memberStepOneRequest): RedirectResponse
     {
         $member = Member::updateOrCreate(['email' => $memberStepOneRequest->validated()['email']], $memberStepOneRequest->validated());
-        Log::debug("ATTRIBUTES", $member->getAttributes());
         $memberStepOneRequest->session()->put(['currentStep' => 'two', 'memberData' => $member->getAttributes()]);
 
-        return redirect('/register/steps/two');
+        return redirect(route('steps.two.show'));
     }
 
     public function stepTwo(MemberStepTwoRequest $memberStepTwoRequest): RedirectResponse
@@ -77,7 +75,7 @@ class StepController extends Controller
 
         $memberStepTwoRequest->session()->put(['currentStep' => 'thanks']);
 
-        return redirect('/register/steps/thanks');
+        return redirect(route('steps.thanks.show'));
     }
 
     public function startOver(Request $request): RedirectResponse
@@ -85,6 +83,6 @@ class StepController extends Controller
         Inertia::clearHistory();
         $request->session()->invalidate();
 
-        return redirect(route('index'));
+        return redirect(route('index.show'));
     }
 }
