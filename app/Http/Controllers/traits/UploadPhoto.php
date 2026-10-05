@@ -9,7 +9,7 @@ use Illuminate\Support\Facades\Storage;
 
 trait UploadPhoto
 {
-    public function uploadPhotoIfExists(Request $request, ?string $oldPathToPhoto): string
+    public function uploadPhotoIfExists(Request $request, ?string $oldPathToPhoto): ?string
     {
         if (! $request->hasFile('photo')) {
             return $oldPathToPhoto;
