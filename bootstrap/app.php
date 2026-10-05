@@ -24,6 +24,7 @@ return Application::configure(basePath: dirname(__DIR__))
             EncryptHistory::class,
         ]);
         $middleware->redirectGuestsTo(fn() => route('admin.login.index'));
+        $middleware->trustProxies(at: '*');
     })
     ->withExceptions(function (Exceptions $exceptions): void {
         $exceptions->shouldRenderJsonWhen(
