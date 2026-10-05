@@ -2,6 +2,8 @@
 import {InfiniteScroll, router} from "@inertiajs/vue3";
 import AdminPanelEditMember from "@/components/AdminPanelEditMember.vue";
 import {ref, watchEffect} from "vue";
+import AdminPanelDeleteMemberConfirm from "@/components/AdminPanelDeleteMemberConfirm.vue";
+import AdminPanelDeleteMemberBtn from "../components/AdminPanelDeleteMemberBtn.vue";
 
 const props = defineProps({
     members: Object,
@@ -11,7 +13,8 @@ const props = defineProps({
 const options = {preserveScroll: true}
 
 const isEditing = ref(false);
-const editingMember = ref(null);
+
+const chosenMember = ref(null);
 
 function switchVisibility(member) {
     router.patch(`/admin/members/${member.id}/visibility`, {
@@ -19,15 +22,12 @@ function switchVisibility(member) {
     }, options);
 }
 
-function deleteMember(member) {
-    router.delete(`/admin/members/${member.id}`, options);
-}
-
 function editMember(member) {
     isEditing.value = true;
-    editingMember.value = member;
-
+    chosenMember.value = member;
 }
+
+
 
 watchEffect(function () {
     if (isEditing.value) {
@@ -41,12 +41,13 @@ watchEffect(function () {
 
 <template>
     <div class="m-5"><h1 class="text-2xl font-bold mb-4 text-center">Admin panel</h1></div>
-    <div v-if="members.data.length === 0" class="m-5"><h2 class="mb-4 text-center">No members have registered yet.</h2></div>
+    <div v-if="members.data.length === 0" class="m-5"><h2 class="mb-4 text-center">No members have registered yet.</h2>
+    </div>
     <InfiniteScroll data="members">
         <div class="max-w-7xl mx-auto p-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div v-for="member in members.data" :key="member.id"
-                     class="flex flex-col bg-white border rounded-lg shadow-sm p-5 gap-3 wrap-break-word">
+                     class="flex flex-col bg-white border rounded-lg shadow-sm p-5 gap-3 wrap-break-word relative">
                     <div class="flex flex-col-2 gap-3 self-center">
                         <div class="w-20 self-center">
                             <img :src="`${member.photo_url}`"
@@ -111,23 +112,21 @@ watchEffect(function () {
                         <span>{{ member.about_me || '—' }}</span>
                     </div>
 
-                    <div class="flex flex-col-3 gap-1 mt-auto text-xs">
+                    <div class="grid grid-cols-3 gap-1 mt-auto text-xs">
                         <button @click="switchVisibility(member)"
-                                class="border rounded-md w-100 px-3 py-2 bg-yellow-300 hover:bg-yellow-50">Switch
+                                class="border rounded-md w-full px-3 py-2 bg-yellow-300 hover:bg-yellow-50">Switch
                             visibility
                         </button>
                         <button @click="editMember(member)"
-                                class="border rounded-md w-100 px-3 py-2 bg-blue-300 hover:bg-blue-50">Edit
+                                class="border rounded-md w-full px-3 py-2 bg-blue-300 hover:bg-blue-50">Edit
                         </button>
-                        <button @click="deleteMember(member)"
-                                class="border rounded-md w-100 px-3 py-2 bg-red-300 hover:bg-red-50">Delete
-                        </button>
+                        <AdminPanelDeleteMemberBtn :member="member" />
                     </div>
                 </div>
             </div>
         </div>
     </InfiniteScroll>
-    <AdminPanelEditMember v-if="isEditing" :member="editingMember" :countries="countries" @cancel="isEditing=false"/>
+    <AdminPanelEditMember v-if="isEditing" :member="chosenMember" :countries="countries" @show-component="isEditing=false"/>
 </template>
 
 

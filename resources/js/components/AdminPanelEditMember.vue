@@ -18,7 +18,7 @@ const props = defineProps({
 });
 
 
-const emit = defineEmits(['cancel']);
+const emit = defineEmits(['show-component']);
 
 const form = useForm({
     first_name: props.member.first_name,
@@ -37,7 +37,7 @@ const form = useForm({
 function updateMember() {
     form.patch(`/admin/members/${props.member.id}`, {
         preserveScroll: 'errors',
-        onSuccess: () => emit('cancel'),
+        onSuccess: () => emit('show-component'),
     });
 }
 
@@ -141,7 +141,7 @@ function updateMember() {
                 </div>
             </div>
             <div class="flex justify-center gap-4 mt-4">
-                <button @click="emit('cancel')" class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">
+                <button @click="emit('show-component')" class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">
                     Cancel
                 </button>
                 <button type="submit" :disabled="form.processing"
