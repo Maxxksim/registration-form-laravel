@@ -12,6 +12,7 @@ const page = usePage();
 const flatPickerConfig = {
     maxDate: 'today',
     dateFormat: 'Y-m-d',
+    allowInput: true
 }
 
 const props = defineProps({
@@ -78,7 +79,7 @@ const form = useForm({
         <div v-if="form.errors.country" class="text-red-500">{{ form.errors.country }}</div>
 
         <label class="after:ml-1 after:text-red-500 after:content-['*']">Phone</label>
-        <IntlTelInput v-model="form.phone" @input="form.clearErrors('phone')" autocomplete="off" required :input-props="{
+        <IntlTelInput v-model="form.phone" @change-number="form.clearErrors('phone')" :input-props="{
          required: true,
          autocomplete: 'off',
          placeholder: 'Enter your number',

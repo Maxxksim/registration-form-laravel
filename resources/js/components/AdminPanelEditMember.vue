@@ -9,6 +9,7 @@ import UploadPhotoInput from "@/components/UploadPhotoInput.vue";
 const flatPickerConfig = {
     maxDate: 'today',
     dateFormat: 'Y-m-d',
+    allowInput: true
 };
 
 const props = defineProps({
@@ -50,54 +51,56 @@ function updateMember() {
                 <div class="flex-1 min-w-0">
                     <div>
                         <label for="first name">First Name</label>
-                        <input type="text" v-model="form.first_name" required
+                        <input type="text" v-model="form.first_name" @input="form.clearErrors('first_name')" required autocomplete="off"
                                class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.first_name" class="text-red-500">{{ form.errors.first_name }}</div>
                     </div>
 
                     <div>
                         <label for="last name">Last Name</label>
-                        <input type="text" v-model="form.last_name" required class="border rounded-md w-full px-3 py-2">
+                        <input type="text" v-model="form.last_name" @input="form.clearErrors('last_name')" required autocomplete="off"
+                               class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.last_name" class="text-red-500">{{ form.errors.last_name }}</div>
                     </div>
 
                     <div>
                         <label for="birthdate">Birthdate</label>
-                        <FlatPickr v-model="form.birthdate" required :config="flatPickerConfig"
+                        <FlatPickr v-model="form.birthdate" autocomplete="off" @input="form.clearErrors('birthdate')" required :config="flatPickerConfig"
                                    class="border rounded-md w-full px-3 py-2"/>
                         <div v-if="form.errors.birthdate" class="text-red-500">{{ form.errors.birthdate }}</div>
                     </div>
 
                     <div>
                         <label for="report subject">Report subject</label>
-                        <input type="text" v-model="form.report_subject" required
+                        <input type="text" v-model="form.report_subject" autocomplete="off" @input="form.clearErrors('report_subject')" required
                                class="border rounded-md w-full px-3 py-2">
-                        <div v-if="form.errors.report_subject" class="text-red-500">{{
-                                form.errors.report_subject
-                            }}
-                        </div>
+                        <div v-if="form.errors.report_subject" class="text-red-500">{{ form.errors.report_subject }}</div>
                     </div>
 
                     <div><label for="country">Country</label>
-                        <select v-model="form.country" required class="border rounded-md w-full px-3 py-2">
+                        <select v-model="form.country" autocomplete="off" @input="form.clearErrors('country')" required
+                                class="border rounded-md w-full px-3 py-2">
                             <option v-for="country in countries" :value="country">
                                 {{ country }}
                             </option>
                         </select>
-                        <div v-if="form.errors.country" class="text-red-500">{{ form.errors.country }}</div>
+                        <div v-if="form.errors.country" class="text-red-500">{{form.errors.country }}</div>
                     </div>
 
                     <div>
                         <label for="phone" class="block">Phone</label>
-                        <IntlTelInput v-model="form.phone"
-                                      :class-names="{ container: 'w-full' }"
-                                      :input-props="{ class: 'border rounded-md w-full block px-3 py-2' }"/>
+                        <IntlTelInput v-model="form.phone" @change-number="form.clearErrors('phone')" :class-names="{ container: 'w-full' }" :input-props="{
+                        required: true,
+                        autocomplete: 'off',
+                        class: 'border rounded-md w-full block px-3 py-2' }"
+                        />
                         <div v-if="form.errors.phone" class="text-red-500">{{ form.errors.phone }}</div>
                     </div>
 
                     <div>
                         <label for="email" class="block">Email</label>
-                        <input type="email" v-model="form.email" required class="border rounded-md w-full px-3 py-2">
+                        <input type="email" v-model="form.email" autocomplete="off" @input="form.clearErrors('email')" required
+                               class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.email" class="text-red-500">{{ form.errors.email }}</div>
                     </div>
                 </div>
@@ -105,19 +108,21 @@ function updateMember() {
                 <div class="flex-1 min-w-0">
                     <div>
                         <label for="company">Company</label>
-                        <input type="text" v-model="form.company" class="border rounded-md w-full px-3 py-2">
+                        <input type="text" v-model="form.company" autocomplete="off" @input="form.clearErrors('company')"
+                               class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.company" class="text-red-500">{{ form.errors.company }}</div>
                     </div>
 
                     <div>
                         <label for="position">Position</label>
-                        <input type="text" v-model="form.position" class="border rounded-md w-full px-3 py-2">
+                        <input type="text" v-model="form.position" autocomplete="off" @input="form.clearErrors('position')"
+                               class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.position" class="text-red-500">{{ form.errors.position }}</div>
                     </div>
 
                     <div>
                         <label for="about me">About me</label>
-                        <textarea type="text" v-model="form.about_me"
+                        <textarea type="text" v-model="form.about_me" autocomplete="off" @input="form.clearErrors('about_me')"
                                   class="break-word border rounded-md w-full h-[111.5px] resize-y px-3 py-2"></textarea>
                         <div v-if="form.errors.about_me" class="text-red-500">{{ form.errors.about_me }}</div>
                     </div>
