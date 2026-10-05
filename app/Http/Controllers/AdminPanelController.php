@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Controllers;
 
 use App\Models\Member;
@@ -13,13 +15,13 @@ class AdminPanelController extends Controller
 {
     public function index(): RedirectResponse|Response
     {
-        if (!Auth::check()) {
+        if (! Auth::check()) {
             return redirect(route('admin.login.index'));
         }
 
         return Inertia::render('AdminPanel', [
             'members' => Inertia::scroll(Member::paginate(12)->toResourceCollection()),
-            'countries' => Countries::getNames('en')
+            'countries' => Countries::getNames('en'),
         ]);
     }
 }

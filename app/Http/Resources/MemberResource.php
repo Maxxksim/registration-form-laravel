@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
@@ -23,7 +25,7 @@ class MemberResource extends JsonResource
             'position' => $this->position,
             'about_me' => $this->about_me,
             'photo_url' => $this->path_to_photo ? asset(Storage::url($this->path_to_photo)) : asset('images/default/default-photo.webp'),
-            'is_visible' => $this->is_visible
+            'is_visible' => $this->is_visible,
         ];
     }
 }
