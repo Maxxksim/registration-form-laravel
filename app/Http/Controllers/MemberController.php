@@ -33,7 +33,9 @@ class MemberController extends Controller
 
     public function delete(Member $member): RedirectResponse
     {
-        Storage::disk('public')->delete($member->path_to_photo);
+        if ($member->path_to_photo) {
+            Storage::disk('public')->delete($member->path_to_photo);
+        }
         $member->delete();
 
         return back();
