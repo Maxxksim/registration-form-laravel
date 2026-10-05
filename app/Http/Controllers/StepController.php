@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Controllers\traits\UploadPhoto;
 use App\Http\Requests\MemberStepOneRequest;
 use App\Http\Requests\MemberStepTwoRequest;
 use App\Models\Member;
@@ -17,6 +18,8 @@ use Symfony\Component\Intl\Countries;
 
 class StepController extends Controller
 {
+    use UploadPhoto;
+
     public function index(Request $request): RedirectResponse
     {
         if (!$request->session()->has('currentStep')) {
@@ -59,22 +62,18 @@ class StepController extends Controller
     public function stepOne(MemberStepOneRequest $memberStepOneRequest): RedirectResponse
     {
         $member = Member::updateOrCreate(['email' => $memberStepOneRequest->validated()['email']], $memberStepOneRequest->validated());
-        $memberStepOneRequest->session()->put(['currentStep' => 'two', 'memberData' => $member->only('first_name', 'last_name', 'birthdate', 'report_subject', 'country', 'phone', 'email', 'id')]);
+        Log::debug("ATTRIBUTES", $member->getAttributes());
+        $memberStepOneRequest->session()->put(['currentStep' => 'two', 'memberData' => $member->getAttributes()]);
 
         return redirect('/register/steps/two');
     }
 
     public function stepTwo(MemberStepTwoRequest $memberStepTwoRequest): RedirectResponse
     {
-        $pathToPhoto = null;
-        if ($memberStepTwoRequest->hasFile('photo')) {
-            $pathToPhoto = $memberStepTwoRequest->image('photo')->toWebp()->store('photos', 'public');
-        }
-
-        Member::where('id', $memberStepTwoRequest->session()->get('memberData')['id'])->update(array_merge(
-            $memberStepTwoRequest->safe()->except('photo'),
-            ['path_to_photo' => $pathToPhoto]
-        ));
+        $member = Member::find($memberStepTwoRequest->session()->get('memberData')['id']);
+        $validatedData = $memberStepTwoRequest->safe()->except('photo');
+        $validatedData['path_to_photo'] = $this->uploadPhotoIfExists($memberStepTwoRequest, $member->path_to_photo);
+        $member->update($validatedData);
 
         $memberStepTwoRequest->session()->put(['currentStep' => 'thanks']);
 
