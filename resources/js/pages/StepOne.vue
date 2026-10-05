@@ -7,8 +7,6 @@ import "intl-tel-input/styles";
 import Map from "@/components/Map.vue";
 import Error from "@/components/Error.vue";
 
-const page = usePage();
-
 const flatPickerConfig = {
     maxDate: 'today',
     dateFormat: 'Y-m-d',
@@ -24,7 +22,6 @@ const props = defineProps({
 const member = props.memberData ?? {};
 
 const form = useForm({
-    _token: page.props.csrf_token,
     first_name: member.first_name ?? null,
     last_name: member.last_name ?? null,
     birthdate: member.birthdate ?? null,

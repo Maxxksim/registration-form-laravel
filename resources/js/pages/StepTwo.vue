@@ -5,10 +5,8 @@ import Error from "@/components/Error.vue";
 import {computed, ref} from "vue";
 import UploadPhotoInput from "@/components/UploadPhotoInput.vue";
 
-const page = usePage();
 
 const form = useForm({
-    _token: page.props.csrf_token,
     company: null,
     position: null,
     about_me: null,
