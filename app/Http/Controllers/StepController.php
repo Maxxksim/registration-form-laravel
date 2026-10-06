@@ -8,8 +8,10 @@ use App\Http\Controllers\traits\UploadPhoto;
 use App\Http\Requests\MemberStepOneRequest;
 use App\Http\Requests\MemberStepTwoRequest;
 use App\Models\Member;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,7 +23,7 @@ class StepController extends Controller
 
     public function index(Request $request): RedirectResponse
     {
-        if (! $request->session()->has('currentStep')) {
+        if (!$request->session()->has('currentStep')) {
             $request->session()->put('currentStep', 'one');
 
             return redirect(route('steps.one.show'));
@@ -32,8 +34,14 @@ class StepController extends Controller
 
     public function getStepOne(Request $request): Response
     {
+        $request->session()->put(['currentStep' => 'one']);
         $countries = Countries::getNames('en');
-        $initialCountry = Http::get("https://ipapi.co/{$request->ip()}/json")->json('country_code');
+
+        try {
+            $initialCountry = Cache::remember("initCountryFor:{$request->ip()}", now()->addDay(), fn() => Http::timeout(3)->get("https://ipapi.co/{$request->ip()}/json")->json('country_code'));
+        } catch (ConnectionException) {
+            $initialCountry = null;
+        }
 
         return Inertia::render('StepOne', [
             'countries' => $countries,
@@ -42,15 +50,16 @@ class StepController extends Controller
         ]);
     }
 
-    public function getStepTwo(): Response
+    public function getStepTwo(Request $request): Response
     {
+        $request->session()->put(['currentStep' => 'two']);
         return Inertia::render('StepTwo');
     }
 
     public function getStepThanks(): Response
     {
         return Inertia::render('StepThanks', [
-            'countMembers' => Member::count(),
+            'countMembers' => Member::visible()->count(),
             'sharingData' => [
                 'text' => config('sharing.text'),
                 'url' => config('sharing.url'),
@@ -69,6 +78,14 @@ class StepController extends Controller
     public function stepTwo(MemberStepTwoRequest $memberStepTwoRequest): RedirectResponse
     {
         $member = Member::find($memberStepTwoRequest->session()->get('memberData')['id']);
+
+        if (!$member) {
+            $memberStepTwoRequest->session()->invalidate();
+            $memberStepTwoRequest->session()->regenerateToken();
+
+            return redirect(route('steps.one.show'))->withErrors(['error' => 'We couldn\'t find your registration. Please pass the first step again.']);
+        }
+
         $validatedData = $memberStepTwoRequest->safe()->except('photo');
         $validatedData['path_to_photo'] = $this->uploadPhotoIfExists($memberStepTwoRequest, $member->path_to_photo);
         $member->update($validatedData);
@@ -82,6 +99,7 @@ class StepController extends Controller
     {
         Inertia::clearHistory();
         $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect(route('index.show'));
     }

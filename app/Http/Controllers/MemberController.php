@@ -6,8 +6,10 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\traits\UploadPhoto;
 use App\Http\Requests\UpdateMemberRequest;
+use App\Http\Resources\MemberResource;
 use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -19,13 +21,13 @@ class MemberController extends Controller
     public function index(): Response
     {
         return Inertia::render('Members', [
-            'members' => Inertia::scroll(Member::where('is_visible', true)->paginate(12)->toResourceCollection()),
+            'members' => Inertia::scroll(MemberResource::collection(Member::visible()->paginate())),
         ]);
     }
 
-    public function switchVisibility(Member $member, UpdateMemberRequest $updateMemberRequest): RedirectResponse
+    public function switchVisibility(Member $member, Request $request): RedirectResponse
     {
-        $member->is_visible = $updateMemberRequest->validated()['is_visible'];
+        $member->is_visible = $request->validate(['is_visible' => ['required', 'bool']])['is_visible'];
         $member->save();
 
         return back();
