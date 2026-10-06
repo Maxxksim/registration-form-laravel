@@ -16,7 +16,7 @@ class MemberRequest extends FormRequest
             'last_name' => ['required', 'string', 'max:100'],
             'birthdate' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:tomorrow'],
             'report_subject' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'phone:AUTO'],
+            'phone' => ['required', 'string', 'max:20', 'phone:AUTO'],
             'country' => ['required', 'string', 'max:100', Rule::in(Countries::getNames('en'))],
             'email' => ['required', 'string', 'email', 'max:255'],
             'company' => ['nullable', 'string', 'max:255'],
