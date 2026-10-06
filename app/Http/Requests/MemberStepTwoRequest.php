@@ -5,16 +5,12 @@ declare(strict_types=1);
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
 
-class MemberStepTwoRequest extends FormRequest
+class MemberStepTwoRequest extends MemberRequest
 {
     public function rules(): array
     {
-        return [
-            'company' => ['nullable', 'string', 'max:255'],
-            'position' => ['nullable', 'string', 'max:255'],
-            'about_me' => ['nullable', 'string', 'max:500'],
-            'photo' => ['nullable', 'file', 'image', 'mimes:png,jpeg,webp', 'max:3072'],
-        ];
+        return Arr::only(parent::rules(), ['company', 'position', 'about_me', 'photo']);
     }
 }

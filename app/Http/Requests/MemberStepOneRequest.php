@@ -4,30 +4,19 @@ declare(strict_types=1);
 
 namespace App\Http\Requests;
 
+use App\Http\Requests\traits\MemberRules;
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Support\Arr;
 use Illuminate\Validation\Rule;
 use Symfony\Component\Intl\Countries;
 
-class MemberStepOneRequest extends FormRequest
+class MemberStepOneRequest extends MemberRequest
 {
     public function rules(): array
     {
-        return [
-            'first_name' => ['required', 'string', 'max:100'],
-            'last_name' => ['required', 'string', 'max:100'],
-            'birthdate' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:tomorrow'],
-            'report_subject' => ['required', 'string', 'max:255'],
-            'phone' => ['required', 'string', 'phone:AUTO'],
-            'country' => ['required', 'string', 'max:100', Rule::in(Countries::getNames('en'))],
-            'email' => ['required', 'string', 'email', Rule::unique('members')->ignore($this->session()->get('memberData.email'), 'email'), 'max:255'],
-        ];
-    }
+        $rules = Arr::except(parent::rules(), ['company', 'position', 'about_me', 'photo']);
+        $rules['email'][] = Rule::unique('members')->ignore($this->session()->get('memberData.email'), 'email');
 
-    public function messages(): array
-    {
-        return [
-            'phone.phone' => 'Please enter a valid phone number.',
-            'country.in' => 'The selected country doesn\'t exist.'
-        ];
+        return $rules;
     }
 }
