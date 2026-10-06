@@ -51,14 +51,14 @@ function updateMember() {
                 <div class="flex-1 min-w-0">
                     <div>
                         <label for="first name">First Name</label>
-                        <input type="text" v-model="form.first_name" @input="form.clearErrors('first_name')" required autocomplete="off"
+                        <input type="text" v-model="form.first_name" maxlength="100"  @input="form.clearErrors('first_name')" required autocomplete="off"
                                class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.first_name" class="text-red-500">{{ form.errors.first_name }}</div>
                     </div>
 
                     <div>
                         <label for="last name">Last Name</label>
-                        <input type="text" v-model="form.last_name" @input="form.clearErrors('last_name')" required autocomplete="off"
+                        <input type="text" v-model="form.last_name" maxlength="100" @input="form.clearErrors('last_name')" required autocomplete="off"
                                class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.last_name" class="text-red-500">{{ form.errors.last_name }}</div>
                     </div>
@@ -72,7 +72,7 @@ function updateMember() {
 
                     <div>
                         <label for="report subject">Report subject</label>
-                        <input type="text" v-model="form.report_subject" autocomplete="off" @input="form.clearErrors('report_subject')" required
+                        <input type="text" v-model="form.report_subject" autocomplete="off" maxlength="255" @input="form.clearErrors('report_subject')" required
                                class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.report_subject" class="text-red-500">{{ form.errors.report_subject }}</div>
                     </div>
@@ -99,7 +99,7 @@ function updateMember() {
 
                     <div>
                         <label for="email" class="block">Email</label>
-                        <input type="email" v-model="form.email" autocomplete="off" @input="form.clearErrors('email')" required
+                        <input type="email" v-model="form.email" autocomplete="off" maxlength="255" @input="form.clearErrors('email')" required
                                class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.email" class="text-red-500">{{ form.errors.email }}</div>
                     </div>
@@ -108,21 +108,21 @@ function updateMember() {
                 <div class="flex-1 min-w-0">
                     <div>
                         <label for="company">Company</label>
-                        <input type="text" v-model="form.company" autocomplete="off" @input="form.clearErrors('company')"
+                        <input type="text" v-model="form.company" autocomplete="off" maxlength="255" @input="form.clearErrors('company')"
                                class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.company" class="text-red-500">{{ form.errors.company }}</div>
                     </div>
 
                     <div>
                         <label for="position">Position</label>
-                        <input type="text" v-model="form.position" autocomplete="off" @input="form.clearErrors('position')"
+                        <input type="text" v-model="form.position" autocomplete="off" maxlength="255" @input="form.clearErrors('position')"
                                class="border rounded-md w-full px-3 py-2">
                         <div v-if="form.errors.position" class="text-red-500">{{ form.errors.position }}</div>
                     </div>
 
                     <div>
                         <label for="about me">About me</label>
-                        <textarea type="text" v-model="form.about_me" autocomplete="off" @input="form.clearErrors('about_me')"
+                        <textarea type="text" v-model="form.about_me" autocomplete="off" maxlength="500" @input="form.clearErrors('about_me')"
                                   class="break-word border rounded-md w-full h-[111.5px] resize-y px-3 py-2"></textarea>
                         <div v-if="form.errors.about_me" class="text-red-500">{{ form.errors.about_me }}</div>
                     </div>

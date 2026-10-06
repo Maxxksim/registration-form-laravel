@@ -6,6 +6,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Validation\Rule;
+use Symfony\Component\Intl\Countries;
 
 class MemberStepOneRequest extends FormRequest
 {
@@ -17,7 +18,7 @@ class MemberStepOneRequest extends FormRequest
             'birthdate' => ['required', 'date', 'date_format:Y-m-d', 'before_or_equal:tomorrow'],
             'report_subject' => ['required', 'string', 'max:255'],
             'phone' => ['required', 'string', 'phone:AUTO'],
-            'country' => ['required', 'string', 'max:255'],
+            'country' => ['required', 'string', 'max:100', Rule::in(Countries::getNames('en'))],
             'email' => ['required', 'string', 'email', Rule::unique('members')->ignore($this->session()->get('memberData.email'), 'email'), 'max:255'],
         ];
     }
@@ -26,6 +27,7 @@ class MemberStepOneRequest extends FormRequest
     {
         return [
             'phone.phone' => 'Please enter a valid phone number.',
+            'country.in' => 'The selected country doesn\'t exist.'
         ];
     }
 }
