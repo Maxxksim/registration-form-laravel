@@ -9,6 +9,7 @@ use App\Http\Requests\UpdateMemberRequest;
 use App\Http\Resources\MemberResource;
 use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -24,9 +25,9 @@ class MemberController extends Controller
         ]);
     }
 
-    public function switchVisibility(Member $member, UpdateMemberRequest $updateMemberRequest): RedirectResponse
+    public function switchVisibility(Member $member, Request $request): RedirectResponse
     {
-        $member->is_visible = $updateMemberRequest->validated()['is_visible'];
+        $member->is_visible = $request->validate(['is_visible' => ['required', 'bool']])['is_visible'];
         $member->save();
 
         return back();
