@@ -6,8 +6,6 @@ const props = defineProps({
     members: Object
 });
 
-console.table(props.members);
-
 </script>
 
 <template>
