@@ -57,7 +57,7 @@ class StepController extends Controller
     public function getStepThanks(): Response
     {
         return Inertia::render('StepThanks', [
-            'countMembers' => Member::count(),
+            'countMembers' => Member::visible()->count(),
             'sharingData' => [
                 'text' => config('sharing.text'),
                 'url' => config('sharing.url'),

@@ -9,7 +9,7 @@ use App\Http\Requests\UpdateMemberRequest;
 use App\Http\Resources\MemberResource;
 use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Facades\Request;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -21,7 +21,7 @@ class MemberController extends Controller
     public function index(): Response
     {
         return Inertia::render('Members', [
-            'members' => Inertia::scroll(MemberResource::collection(Member::where('is_visible', true)->paginate())),
+            'members' => Inertia::scroll(MemberResource::collection(Member::visible()->paginate())),
         ]);
     }
 
