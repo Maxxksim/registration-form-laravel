@@ -8,8 +8,10 @@ use App\Http\Controllers\traits\UploadPhoto;
 use App\Http\Requests\MemberStepOneRequest;
 use App\Http\Requests\MemberStepTwoRequest;
 use App\Models\Member;
+use Illuminate\Http\Client\ConnectionException;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Http;
 use Inertia\Inertia;
 use Inertia\Response;
@@ -33,7 +35,12 @@ class StepController extends Controller
     public function getStepOne(Request $request): Response
     {
         $countries = Countries::getNames('en');
-        $initialCountry = Http::get("https://ipapi.co/{$request->ip()}/json")->json('country_code');
+
+        try {
+            $initialCountry = Cache::remember("initCountryFor:{$request->ip()}", now()->addDay(), fn () => Http::timeout(3)->get("https://ipapi.co/{$request->ip()}/json")->json('country_code'));
+        } catch (ConnectionException) {
+            $initialCountry = null;
+        }
 
         return Inertia::render('StepOne', [
             'countries' => $countries,
