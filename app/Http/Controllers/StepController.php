@@ -23,7 +23,7 @@ class StepController extends Controller
 
     public function index(Request $request): RedirectResponse
     {
-        if (! $request->session()->has('currentStep')) {
+        if (!$request->session()->has('currentStep')) {
             $request->session()->put('currentStep', 'one');
 
             return redirect(route('steps.one.show'));
@@ -34,10 +34,11 @@ class StepController extends Controller
 
     public function getStepOne(Request $request): Response
     {
+        $request->session()->put(['currentStep' => 'one']);
         $countries = Countries::getNames('en');
 
         try {
-            $initialCountry = Cache::remember("initCountryFor:{$request->ip()}", now()->addDay(), fn () => Http::timeout(3)->get("https://ipapi.co/{$request->ip()}/json")->json('country_code'));
+            $initialCountry = Cache::remember("initCountryFor:{$request->ip()}", now()->addDay(), fn() => Http::timeout(3)->get("https://ipapi.co/{$request->ip()}/json")->json('country_code'));
         } catch (ConnectionException) {
             $initialCountry = null;
         }
@@ -49,8 +50,9 @@ class StepController extends Controller
         ]);
     }
 
-    public function getStepTwo(): Response
+    public function getStepTwo(Request $request): Response
     {
+        $request->session()->put(['currentStep' => 'two']);
         return Inertia::render('StepTwo');
     }
 
@@ -76,6 +78,14 @@ class StepController extends Controller
     public function stepTwo(MemberStepTwoRequest $memberStepTwoRequest): RedirectResponse
     {
         $member = Member::find($memberStepTwoRequest->session()->get('memberData')['id']);
+
+        if (!$member) {
+            $memberStepTwoRequest->session()->invalidate();
+            $memberStepTwoRequest->session()->regenerateToken();
+
+            return redirect(route('steps.one.show'))->withErrors(['error' => 'We couldn\'t find your registration. Please pass the first step again.']);
+        }
+
         $validatedData = $memberStepTwoRequest->safe()->except('photo');
         $validatedData['path_to_photo'] = $this->uploadPhotoIfExists($memberStepTwoRequest, $member->path_to_photo);
         $member->update($validatedData);
@@ -89,6 +99,7 @@ class StepController extends Controller
     {
         Inertia::clearHistory();
         $request->session()->invalidate();
+        $request->session()->regenerateToken();
 
         return redirect(route('index.show'));
     }
