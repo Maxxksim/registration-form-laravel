@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\AdminPanel\MemberResource;
 use App\Models\Member;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -20,7 +21,7 @@ class AdminPanelController extends Controller
         }
 
         return Inertia::render('AdminPanel', [
-            'members' => Inertia::scroll(Member::paginate(12)->toResourceCollection()),
+            'members' => Inertia::scroll(MemberResource::collection(Member::paginate(12))),
             'countries' => Countries::getNames('en'),
         ]);
     }

@@ -33,7 +33,7 @@ const props = defineProps({
 
                         <div class="p-5">
                             <span class="font-semibold md:hidden">Full name:</span>
-                            <span>{{ member.first_name + ' ' + member.last_name }}</span>
+                            <span>{{ member.full_name }}</span>
                         </div>
 
                         <div>
