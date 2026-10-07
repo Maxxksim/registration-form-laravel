@@ -44,6 +44,15 @@ services:
       - ./registration-form:/var/www/registration-form
     entrypoint: [ "php", "/var/www/registration-form/artisan" ]
 
+  composer:
+      image: composer:latest
+      working_dir: /var/www/registration-form
+      volumes:
+        - ./registration-form:/var/www/registration-form
+        -  vendor:/var/www/registration-form/vendor
+      entrypoint: ["composer", "--ignore-platform-reqs"]
+
+
 volumes:
   db_data:
   vendor:
