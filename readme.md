@@ -10,14 +10,14 @@ Steps to start the project:
    1)npm install
    2)npm run dev
 4. Start docker if you didn't it before
-5. Enter commands in the terminal: 
-   1)docker compose up nginx -d
-   2)docker compose run --rm composer install
-   3)docker compose run --rm artisan key:generate
-   4)docker compose run --rm artisan migrate --seed
+5. Enter commands in the terminal:   
+   1)docker compose up nginx -d  
+   2)docker compose run --rm composer install  
+   3)docker compose run --rm artisan key:generate  
+   4)docker compose run --rm artisan migrate --seed   
 6. And after steps above the app will be available at http://localhost:8000
 
 Url to get admin panel: http://localhost:8000/admin/panel
-Credentials to admin panel:
-username: admin
+Credentials to admin panel:  
+username: admin  
 password: admin
