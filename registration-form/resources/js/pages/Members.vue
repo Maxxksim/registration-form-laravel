@@ -9,7 +9,7 @@ const props = defineProps({
 </script>
 
 <template>
-
+    <h1>test test</h1>
     <div class="m-5"><h1 class="text-2xl font-bold mb-4 text-center">All members</h1></div>
     <div v-if="members.data.length === 0" class="m-5"><h2 class="mb-4 text-center">No members have registered yet.</h2></div>
     <InfiniteScroll data="members">
