@@ -3,12 +3,19 @@ PHP 8.5 MySQL 8.4
 Steps to start the project:
 
 1. Clone the project to yourself
-2. Copy .env.example to .env
-3. Open a terminal in the project's root directory
+2. Copy .env.example to .env in root directory
+3. Copy .env.example to .env in registration-form directory
+3. Open a terminal in registration-form directory
+4. Enter commands in the terminal:
+   1)npm install
+   2)npm run dev
 4. Start docker if you didn't it before
-5. Enter command in the terminal: docker compose up --build
-The app will be available at http://localhost:8000
-Database migrations will execute automatically
+5. Enter commands in the terminal: 
+   1)docker compose up nginx -d
+   2)docker compose run --rm composer install
+   3)docker compose run --rm artisan key:generate
+   4)docker compose run --rm artisan migrate --seed
+6. And after steps above the app will be available at http://localhost:8000
 
 Url to get admin panel: http://localhost:8000/admin/panel
 Credentials to admin panel:
