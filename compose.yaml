@@ -20,7 +20,7 @@ services:
         condition: service_healthy
     volumes:
       - ./registration-form:/var/www/registration-form
-      - ./registration-formvendor:/var/www/registration-form/vendor
+      - vendor:/var/www/registration-form/vendor
 
   db:
     image: mysql:8.4
