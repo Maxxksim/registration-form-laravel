@@ -9,6 +9,7 @@ services:
       - ./registration-form:/var/www/registration-form
     depends_on:
       - app
+      - db
 
   app:
     build:
