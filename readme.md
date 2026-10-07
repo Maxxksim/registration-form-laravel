@@ -6,8 +6,8 @@ Steps to start the project:
 2. Copy .env.example to .env in root directory
 3. Copy .env.example to .env in registration-form directory
 3. Open a terminal in registration-form directory
-4. Enter commands in the terminal:
-   1)npm install
+4. Enter commands in the terminal:  
+   1)npm install  
    2)npm run dev
 4. Start docker if you didn't it before
 5. Enter commands in the terminal:   
@@ -17,7 +17,7 @@ Steps to start the project:
    4)docker compose run --rm artisan migrate --seed   
 6. And after steps above the app will be available at http://localhost:8000
 
-Url to get admin panel: http://localhost:8000/admin/panel
-Credentials to admin panel:  
+Url to get admin panel: http://localhost:8000/admin/panel  
+Credentials to admin panel:    
 username: admin  
 password: admin
