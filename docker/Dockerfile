@@ -13,6 +13,8 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install zip pdo pdo_mysql intl gd \
     && rm -rf /var/lib/apt/lists/
 
+RUN pecl install xdebug && docker-php-ext-enable xdebug
+
 WORKDIR /var/www/registration-form/
 
 COPY custom.ini /usr/local/etc/php/conf.d/custom.ini
