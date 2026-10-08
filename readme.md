@@ -9,7 +9,7 @@ Steps to start the project:
 5. Start docker if you didn't it before  
 6. Enter the commands in the terminal:     
    1)docker compose up nginx -d  
-   2)docker comose run --rm npm install    
+   2)docker compose run --rm npm install    
    3)docker compose run --rm npm run dev  
    4)docker compose run --rm composer install  
    5)docker compose run --rm artisan key:generate  
