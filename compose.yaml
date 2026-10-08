@@ -56,8 +56,16 @@ services:
         -  vendor:/var/www/registration-form/vendor
       entrypoint: ["composer", "--ignore-platform-reqs"]
 
+  npm:
+    image: node:latest
+    working_dir: /var/www/registration-form
+    volumes:
+      - ./registration-form:/var/www/registration-form
+      - node_modules:/var/www/registration-form/node_modules
+    entrypoint: ['npm']
 
 volumes:
   db_data:
   vendor:
+  node_modules:
 
