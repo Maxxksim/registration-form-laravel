@@ -8,6 +8,7 @@
 /registration-form/resources/js/actions
 /registration-form/resources/js/routes
 /registration-form/resources/js/wayfinder
+/registration-form/public/mix-manifest.json
 /storage/*.key
 /registration-form/storage/pail
 /registration-form/vendor
@@ -44,3 +45,4 @@ opencode.jsonc
 /registration-form/public/js
 /registration-form/public/css
 /registration-form/public/images/vendor
+
