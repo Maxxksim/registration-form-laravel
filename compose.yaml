@@ -39,6 +39,8 @@ services:
       test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
       retries: 3
       timeout: 5s
+    ports:
+      - "3306:3306"
 
   artisan:
     build:
