@@ -28,7 +28,7 @@ Route::controller(StepController::class)->group(function () {
 Route::get('/members', [MemberController::class, 'index']);
 Route::get('/admin/panel', [AdminPanelController::class, 'index'])->name('admin.panel');
 Route::get('/admin/login', [AdminAuthController::class, 'index'])->name('admin.login.index')->middleware('guest');
-Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login');
+Route::post('/admin/login', [AdminAuthController::class, 'login'])->name('admin.login')->middleware('guest');
 
 Route::middleware('auth')->group(function () {
     Route::patch('/admin/members/{member}', [MemberController::class, 'update'])->name('admin.members.update');
