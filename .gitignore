@@ -45,4 +45,5 @@ opencode.jsonc
 /registration-form/public/js
 /registration-form/public/css
 /registration-form/public/images/vendor
-
+_ide_helper.php
+_ide_helper_models.php

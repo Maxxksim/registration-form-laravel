@@ -20,6 +20,7 @@
         "symfony/intl": "*"
     },
     "require-dev": {
+        "barryvdh/laravel-ide-helper": "^3.7",
         "fakerphp/faker": "^1.24",
         "larastan/larastan": "^3.9",
         "laravel/pao": "^1.0.6",
