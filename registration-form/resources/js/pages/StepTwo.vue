@@ -1,5 +1,5 @@
 <script setup>
-import {useForm, Link, usePage} from "@inertiajs/vue3";
+import {useForm, Link} from "@inertiajs/vue3";
 import Map from "@/components/Map.vue";
 import Error from "@/components/Error.vue";
 import UploadPhotoInput from "@/components/UploadPhotoInput.vue";
@@ -18,18 +18,18 @@ const form = useForm({
     <Error/>
     <Map></Map>
     <form @submit.prevent="form.post('/register/steps/two', {preserveScroll: 'errors'})" enctype="multipart/form-data"
-          class="max-w-md mx-auto flex flex-col gap-4 p-4">
+          class="max-w-md mx-auto flex flex-col gap-4 p-4" id="form-step2">
         <div class="flex flex-col gap-1">
             <label for="company" class="text-sm font-medium">Company</label>
             <input type="text" v-model="form.company" maxlength="255" @input="form.clearErrors('company')" autocomplete="off"
-                   class="border rounded-md w-full px-3 py-2">
+                   class="border rounded-md w-full px-3 py-2" name="company">
             <div v-if="form.errors.company" class="text-red-500">{{ form.errors.company }}</div>
         </div>
 
         <div class="flex flex-col gap-1">
             <label for="position" class="text-sm font-medium">Position</label>
             <input type="text" v-model="form.position" maxlength="255" @input="form.clearErrors('position')" autocomplete="off"
-                   class="border rounded-md w-full px-3 py-2">
+                   class="border rounded-md w-full px-3 py-2" name="position">
             <div v-if="form.errors.position" class="text-red-500">{{ form.errors.position }}</div>
         </div>
 
@@ -43,7 +43,7 @@ const form = useForm({
         <UploadPhotoInput :form="form" />
         <div class="flex gap-3">
             <Link href="/register/steps/one" class="border rounded-md w-full px-3 py-2 text-center hover:bg-gray-300">Back</Link>
-            <button type="submit" :disabled="form.processing"
+            <button type="submit" :disabled="form.processing" id="step-two-btn"
                     class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Finish
             </button>
         </div>

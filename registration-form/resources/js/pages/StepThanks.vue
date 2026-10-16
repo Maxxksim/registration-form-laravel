@@ -24,16 +24,16 @@ const sharingFacebookUrl = computed(() =>
     <Error/>
     <div class="text-center">
         <Map></Map>
-        <h1 class="text-2xl font-bold mb-6 ">
+        <h1 class="text-2xl font-bold mb-6" id="h1-thanks">
             Thanks
         </h1>
 
         <div class="mx-auto grid w-full max-w-xs grid-cols-2 gap-3 text-sm">
-            <Link href="/members" class="text-blue-700 hover:underline">All members ({{ countMembers }})</Link>
-            <Link href="/register/start" class="text-blue-700 hover:underline">Start over</Link>
-            <a :href="sharingFacebookUrl" rel="noopener noreferrer"
+            <Link href="/members" class="text-blue-700 hover:underline" id="members-link">All members ({{ countMembers }})</Link>
+            <Link href="/register/start" class="text-blue-700 hover:underline" id="start-over-link">Start over</Link>
+            <a :href="sharingFacebookUrl" rel="noopener noreferrer" id="sharing-facebook-btn"
                class="border rounded-md w-full p-3" target="_blank" type="button">Share to Facebook</a>
-            <a :href="sharingTwitterUrl" rel="noopener noreferrer"
+            <a :href="sharingTwitterUrl" rel="noopener noreferrer" id="sharing-twitter-btn"
                class="border rounded-md w-full p-3" target="_blank" type="button">Share to Twitter</a>
         </div>
     </div>

@@ -5,7 +5,7 @@ import { LMap, LTileLayer, LMarker, LTooltip } from "@vue-leaflet/vue-leaflet";
 </script>
 
 <template>
-    <div class="h-112.5 mx-10 mt-10">
+    <div class="h-112.5 mx-10 mt-10" id="map">
         <LMap :zoom="24" :center="[34.10114, -118.34376]" class="border rounded-md" >
             <LTileLayer
                 url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

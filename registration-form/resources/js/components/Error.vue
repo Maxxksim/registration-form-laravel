@@ -18,7 +18,7 @@ watchEffect(() => {
 </script>
 
 <template>
-    <div v-if="visible"
+    <div v-if="visible" id="error"
          class="fixed top-4 z-3000 w-full max-w-md text-red-700 bg-red-50 border border-red-200 rounded-md ml-5 p-3 shadow"
          :class="{ 'animate-pulse' : visible }">
 
