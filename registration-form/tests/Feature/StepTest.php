@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use App\Models\Admin;
 use App\Models\Member;
 use Illuminate\Http\UploadedFile;
 use Inertia\Testing\AssertableInertia as Assert;
@@ -153,5 +154,28 @@ test('user try post step two with invalid data', function () {
     $this->post('/register/steps/two', $memberData)
         ->assertStatus(302)
         ->assertSessionHasErrors(array_keys($memberData));
+});
+
+test('user try pass step two when has been already deleted by admin', function () {
+    $memberData = Member::factory()->make()->getAttributes();
+    $this->post('/register/steps/one', $memberData)->assertRedirect('/register/steps/two');
+    $member = Member::where('email', $memberData['email'])->first();
+
+    $this->from('/admin/panel')
+        ->actingAs(Admin::factory()->create())
+        ->delete("/admin/members/$member->id")
+        ->assertSessionHasNoErrors()
+        ->assertRedirectBack();
+
+    $response = $this->post('/register/steps/two')
+        ->assertRedirect('/register/steps/one');
+
+    $this->followRedirects($response)
+        ->assertOk()
+        ->assertInertia(fn(Assert $page) => $page
+            ->component('StepOne')
+            ->where('errors.error', 'We couldn\'t find your registration. Please pass the first step again.')
+        );
+
 });
 
