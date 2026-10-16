@@ -2,7 +2,6 @@
 import {InfiniteScroll, router} from "@inertiajs/vue3";
 import AdminPanelEditMember from "@/components/AdminPanelEditMember.vue";
 import {ref, watchEffect} from "vue";
-import AdminPanelDeleteMemberConfirm from "@/components/AdminPanelDeleteMemberConfirm.vue";
 import AdminPanelDeleteMemberBtn from "../components/AdminPanelDeleteMemberBtn.vue";
 
 const props = defineProps({
@@ -117,7 +116,7 @@ watchEffect(function () {
                                 class="border rounded-md w-full px-3 py-2 bg-yellow-300 hover:bg-yellow-50">Switch
                             visibility
                         </button>
-                        <button @click="editMember(member)"
+                        <button @click="editMember(member)" :dusk="`edit-member-${member.id}`"
                                 class="border rounded-md w-full px-3 py-2 bg-blue-300 hover:bg-blue-50">Edit
                         </button>
                         <AdminPanelDeleteMemberBtn :member="member" />

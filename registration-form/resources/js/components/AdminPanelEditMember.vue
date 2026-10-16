@@ -46,7 +46,7 @@ function updateMember() {
 <template>
     <div class="fixed inset-0 bg-black/50 content-center overflow-y-auto">
         <form @submit.prevent="updateMember"
-              class="max-w-xl mx-auto p-5 bg-white rounded-md gap-4">
+              class="max-w-xl mx-auto p-5 bg-white rounded-md gap-4" id="form-edit-member">
             <div class="flex gap-4 flex-col md:flex-row">
                 <div class="flex-1 min-w-0">
                     <div>
