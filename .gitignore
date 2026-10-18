@@ -47,3 +47,4 @@ opencode.jsonc
 /registration-form/public/images/vendor
 _ide_helper.php
 _ide_helper_models.php
+.env.dusk.local
