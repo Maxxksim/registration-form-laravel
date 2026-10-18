@@ -52,34 +52,34 @@ function updateMember() {
                     <div>
                         <label for="first name">First Name</label>
                         <input type="text" v-model="form.first_name" maxlength="100"  @input="form.clearErrors('first_name')" required autocomplete="off"
-                               class="border rounded-md w-full px-3 py-2">
+                               class="border rounded-md w-full px-3 py-2" name="first_name">
                         <div v-if="form.errors.first_name" class="text-red-500">{{ form.errors.first_name }}</div>
                     </div>
 
                     <div>
                         <label for="last name">Last Name</label>
                         <input type="text" v-model="form.last_name" maxlength="100" @input="form.clearErrors('last_name')" required autocomplete="off"
-                               class="border rounded-md w-full px-3 py-2">
+                               class="border rounded-md w-full px-3 py-2" name="last_name">
                         <div v-if="form.errors.last_name" class="text-red-500">{{ form.errors.last_name }}</div>
                     </div>
 
                     <div>
                         <label for="birthdate">Birthdate</label>
                         <FlatPickr v-model="form.birthdate" autocomplete="off" @input="form.clearErrors('birthdate')" required :config="flatPickerConfig"
-                                   class="border rounded-md w-full px-3 py-2"/>
+                                   class="border rounded-md w-full px-3 py-2" name="birthdate" />
                         <div v-if="form.errors.birthdate" class="text-red-500">{{ form.errors.birthdate }}</div>
                     </div>
 
                     <div>
                         <label for="report subject">Report subject</label>
                         <input type="text" v-model="form.report_subject" autocomplete="off" maxlength="255" @input="form.clearErrors('report_subject')" required
-                               class="border rounded-md w-full px-3 py-2">
+                               class="border rounded-md w-full px-3 py-2" name="report_subject">
                         <div v-if="form.errors.report_subject" class="text-red-500">{{ form.errors.report_subject }}</div>
                     </div>
 
                     <div><label for="country">Country</label>
                         <select v-model="form.country" autocomplete="off" @input="form.clearErrors('country')" required
-                                class="border rounded-md w-full px-3 py-2">
+                                class="border rounded-md w-full px-3 py-2" name="country">
                             <option v-for="country in countries" :value="country">
                                 {{ country }}
                             </option>
@@ -92,6 +92,7 @@ function updateMember() {
                         <IntlTelInput v-model="form.phone" @change-number="form.clearErrors('phone')" :class-names="{ container: 'w-full' }" :input-props="{
                         required: true,
                         autocomplete: 'off',
+                        name: 'phone',
                         class: 'border rounded-md w-full block px-3 py-2' }"
                         />
                         <div v-if="form.errors.phone" class="text-red-500">{{ form.errors.phone }}</div>
@@ -100,7 +101,7 @@ function updateMember() {
                     <div>
                         <label for="email" class="block">Email</label>
                         <input type="email" v-model="form.email" autocomplete="off" maxlength="255" @input="form.clearErrors('email')" required
-                               class="border rounded-md w-full px-3 py-2">
+                               class="border rounded-md w-full px-3 py-2" name="email">
                         <div v-if="form.errors.email" class="text-red-500">{{ form.errors.email }}</div>
                     </div>
                 </div>
@@ -109,21 +110,21 @@ function updateMember() {
                     <div>
                         <label for="company">Company</label>
                         <input type="text" v-model="form.company" autocomplete="off" maxlength="255" @input="form.clearErrors('company')"
-                               class="border rounded-md w-full px-3 py-2">
+                               class="border rounded-md w-full px-3 py-2" name="company">
                         <div v-if="form.errors.company" class="text-red-500">{{ form.errors.company }}</div>
                     </div>
 
                     <div>
                         <label for="position">Position</label>
                         <input type="text" v-model="form.position" autocomplete="off" maxlength="255" @input="form.clearErrors('position')"
-                               class="border rounded-md w-full px-3 py-2">
+                               class="border rounded-md w-full px-3 py-2" name="position">
                         <div v-if="form.errors.position" class="text-red-500">{{ form.errors.position }}</div>
                     </div>
 
                     <div>
                         <label for="about me">About me</label>
                         <textarea type="text" v-model="form.about_me" autocomplete="off" maxlength="500" @input="form.clearErrors('about_me')"
-                                  class="break-word border rounded-md w-full h-[111.5px] resize-y px-3 py-2"></textarea>
+                                  class="break-word border rounded-md w-full h-[111.5px] resize-y px-3 py-2" name="position" ></textarea>
                         <div v-if="form.errors.about_me" class="text-red-500">{{ form.errors.about_me }}</div>
                     </div>
 
@@ -144,7 +145,7 @@ function updateMember() {
                 <button @click="emit('show-component')" class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">
                     Cancel
                 </button>
-                <button type="submit" :disabled="form.processing"
+                <button type="submit" :disabled="form.processing" :dusk="`update-member-${member.id}`"
                         class="border rounded-md w-full px-3 py-2 hover:bg-gray-300">Update
                 </button>
             </div>
