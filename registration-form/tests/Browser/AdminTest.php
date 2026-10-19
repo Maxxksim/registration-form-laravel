@@ -28,12 +28,12 @@ test('admin open panel', function () {
 
 test('admin edit member', function () {
     $this->browse(function (Browser $browser) {
-        Admin::factory()->create();
+        $admin = Admin::factory()->create();
         $member = Member::factory()->create();
         $testEditFirstName = 'Test Edit First Name';
         $testEditCompany = 'Test Edit Company';
 
-        $browser->loginAs(1)
+        $browser->loginAs($admin->id)
             ->visit('/admin/panel')
             ->waitForLocation('/admin/panel')
             ->assertSee('Admin panel')
