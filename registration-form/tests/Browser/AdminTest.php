@@ -51,9 +51,42 @@ test('admin edit member', function () {
             ->waitForText($testEditFirstName)
             ->screenshot('editedMember');
         $member->refresh();
-        dump($member->toArray());
         expect($member->company)->toBe($testEditCompany)
             ->and($member->first_name)->toBe($testEditFirstName);
 
+    });
+});
+
+test('admin switch visibility member', function () {
+    $this->browse(function (Browser $browser) {
+        $admin = Admin::factory()->create();
+        $member = Member::factory()->create();
+
+        $browser->loginAs($admin->id)
+            ->visit('/admin/panel')
+            ->waitForLocation('/admin/panel')
+            ->waitForTextIn("@v-s-m-$member->id", 'VISIBLE')
+            ->screenshot('before switch visibility')
+            ->click("@switch-visibility-member-$member->id")
+            ->waitForTextIn("@v-s-m-$member->id", 'HIDDEN')
+            ->screenshot('after switch visibility');
+    });
+});
+
+test('admin delete member', function () {
+    $this->browse(function (Browser $browser) {
+        $admin = Admin::factory()->create();
+        $member = Member::factory()->create();
+
+        $browser->loginAs($admin->id)
+            ->visit('/admin/panel')
+            ->waitForLocation('/admin/panel')
+            ->click("@delete-member-$member->id")
+            ->waitFor("@confirm-delete-member-$member->id")
+            ->screenshot('confirm delete member')
+            ->click("@confirm-delete-member-$member->id")
+            ->waitUntilMissing("@confirm-delete-member-$member->id")
+            ->screenshot('after delete member');
+        $this->assertDatabaseMissing('members', ['id' => $member->id]);
     });
 });

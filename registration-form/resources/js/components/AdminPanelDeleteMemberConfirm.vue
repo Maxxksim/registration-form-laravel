@@ -30,7 +30,7 @@ function deleteMember(member) {
                     </div>
                     <div>
                         <button @click="deleteMember(props.member)"
-                                class="border rounded-md px-3 py-2 bg-red-500 hover:bg-red-300">
+                                class="border rounded-md px-3 py-2 bg-red-500 hover:bg-red-300" :dusk="`confirm-delete-member-${member.id}`">
                             Yes, delete
                         </button>
                     </div>
