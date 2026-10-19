@@ -124,7 +124,7 @@ function updateMember() {
                     <div>
                         <label for="about me">About me</label>
                         <textarea type="text" v-model="form.about_me" autocomplete="off" maxlength="500" @input="form.clearErrors('about_me')"
-                                  class="break-word border rounded-md w-full h-[111.5px] resize-y px-3 py-2" name="position" ></textarea>
+                                  class="break-word border rounded-md w-full h-[111.5px] resize-y px-3 py-2" name="about_me" ></textarea>
                         <div v-if="form.errors.about_me" class="text-red-500">{{ form.errors.about_me }}</div>
                     </div>
 

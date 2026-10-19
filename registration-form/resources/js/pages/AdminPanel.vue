@@ -46,10 +46,10 @@ watchEffect(function () {
         <div class="max-w-7xl mx-auto p-4">
             <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
                 <div v-for="member in members.data" :key="member.id"
-                     class="flex flex-col bg-white border rounded-lg shadow-sm p-5 gap-3 wrap-break-word relative" :dusl="`card-member-${member.id}`">
+                     class="flex flex-col bg-white border rounded-lg shadow-sm p-5 gap-3 wrap-break-word relative" :dusk="`card-member-${member.id}`">
                     <div class="flex flex-col-2 gap-3 self-center">
                         <div class="w-20 self-center">
-                            <img :src="`${member.photo_url}`"
+                            <img :src="`${member.photo_url}`" :id="`photo-${member.id}`"
                                  alt="Photo"
                                  class="w-20 h-20 rounded-md">
                         </div>
@@ -57,58 +57,58 @@ watchEffect(function () {
                         <div :class="member.is_visible ? 'bg-green-300' : 'bg-red-300'"
                              class="border rounded-md w-auto h-20 content-center text-center self-center p-5">
                             <span class="font-bold">Visibility status: </span><br/>
-                            <span :dusk="`v-s-m-${member.id}`">{{ member.is_visible ? 'VISIBLE' : 'HIDDEN' }}</span>
+                            <span :dusk="`v-s-m-${member.id}`" :id="`visibility-${member.id}`">{{ member.is_visible ? 'VISIBLE' : 'HIDDEN' }}</span>
                         </div>
                     </div>
 
                     <div>
                         <span class="font-bold">First name: </span>
-                        <span>{{ member.first_name }}</span>
+                        <span :id="`first-name-${member.id}`">{{ member.first_name }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">Last name: </span>
-                        <span>{{ member.last_name }}</span>
+                        <span :id="`last-name-${member.id}`">{{ member.last_name }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">Birthdate: </span>
-                        <span>{{ member.birthdate }}</span>
+                        <span :id="`birthdate-${member.id}`">{{ member.birthdate }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">Report subject: </span>
-                        <span>{{ member.report_subject }}</span>
+                        <span :id="`report-subject${member.id}`" >{{ member.report_subject }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">Country: </span>
-                        <span>{{ member.country }}</span>
+                        <span :id="`country-${member.id}`">{{ member.country }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">Phone: </span>
-                        <span>{{ member.phone }}</span>
+                        <span :id="`phone-${member.id}`" >{{ member.phone }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">Email: </span>
-                        <span>{{ member.email }}</span>
+                        <span :id="`email-${member.id}`">{{ member.email }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">Company: </span>
-                        <span>{{ member.company || '—' }}</span>
+                        <span :id="`company-${member.id}`">{{ member.company || '—' }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">Position: </span>
-                        <span>{{ member.position || '—' }}</span>
+                        <span :id="`position-${member.id}`">{{ member.position || '—' }}</span>
                     </div>
 
                     <div>
                         <span class="font-bold">About me: </span>
-                        <span>{{ member.about_me || '—' }}</span>
+                        <span :id="`about-me-${member.id}`">{{ member.about_me || '—' }}</span>
                     </div>
 
                     <div class="grid grid-cols-3 gap-1 mt-auto text-xs">
